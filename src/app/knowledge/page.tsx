@@ -179,7 +179,9 @@ export default function KnowledgePage() {
             <div className="flex items-center gap-2 shrink-0">
               <div className="rounded-lg border border-stone-200 bg-stone-50 p-3 text-right">
                 <div className="text-[11px] text-stone-500">Website Sources</div>
-                <div className="text-base font-bold text-stone-900">1 Page / 5 Chunks</div>
+                <div className="text-base font-bold text-stone-900">
+                  {sources ? `1 Page / ${sources.chunks.length} Chunks` : '1 Page / 8 Chunks'}
+                </div>
               </div>
               <div className="rounded-lg border border-stone-200 bg-stone-50 p-3 text-right">
                 <div className="text-[11px] text-stone-500">Media Assets</div>

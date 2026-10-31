@@ -100,7 +100,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
   if (q.includes('package') || q.includes('include') || q.includes('tier') || q.includes('price') || q.includes('cost') || q.includes('pricing') || q.includes('rate') || q.includes('how much')) {
     text += `### Greedy Adventures — Sea View Skydiving Packages 🪂\n\n`;
     text += `We offer **3 tiered tandem skydiving packages** tailored to your preferred media experience:\n\n`;
-    text += `#### 1. Eco Tandem Skydive (Jump Only) — **10,500 THB**\n`;
+    text += `#### 1. Eco Tandem Skydive (Jump Only) — **9,500 to 10,500 THB**\n`;
     text += `• Full 13,000-ft tandem jump strapped to a licensed USPA-certified instructor\n`;
     text += `• 20-minute safety briefing and personalized harness fitting\n`;
     text += `• All protective gear (jumpsuit, goggles, altimeter)\n`;
@@ -111,7 +111,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     text += `• Instructor wrist-mounted wide-angle HD Handycam\n`;
     text += `• Captures your facial reactions, the leap, freefall, and canopy flight\n`;
     text += `• Over 50 high-res action photos + edited HD video delivered digitally\n\n`;
-    text += `#### 3. VIP Sea View Cine-Pack (Ultimate Value) — **14,000 THB** *(Was 17,050 THB)*\n`;
+    text += `#### 3. VIP Sea View Cine-Pack (Ultimate Value) — **14,000 THB** *(Official Rack Rate: 17,050 THB)*\n`;
     text += `• Everything in the Eco Package\n`;
     text += `• Instructor Handycam wrist POV footage + photos\n`;
     text += `• **Dedicated outside cameraman** leaping alongside you to capture full cinematic 360° angles\n`;
@@ -123,7 +123,37 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     return text;
   }
 
-  // Case 5: Weight, age, or health & safety questions
+  // Case 5: Personal Cameras / GoPros / Phones
+  if (q.includes('gopro') || q.includes('own camera') || q.includes('phone') || q.includes('selfie') || (q.includes('bring') && q.includes('camera'))) {
+    text += `### Personal Camera & GoPro Policy 📷⛔\n\n`;
+    text += `Under strict **USPA & Civil Aviation safety regulations**, personal cameras, phones, selfie sticks, and GoPros are **strictly prohibited** during the jump.\n\n`;
+    text += `• **Safety Reason**: Loose objects falling at 220 km/h pose severe safety risks to jumpers and people on the ground.\n`;
+    text += `• **Professional Recording**: To capture your jump safely, you can choose our **Handycam Pro** (instructor wrist camera) or **VIP Cine-Pack** (outside professional cameraman flying with you).\n\n`;
+    text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
+    return text;
+  }
+
+  // Case 6: Spectators, Family, Friends & Lockers
+  if (q.includes('spectator') || q.includes('family') || q.includes('friend') || q.includes('watch') || q.includes('locker') || q.includes('luggage') || q.includes('belonging')) {
+    text += `### Spectator Facilities & Secure Lockers 👥🎒\n\n`;
+    text += `• **Spectator Viewing Area**: Family and friends are warmly welcome to watch your aircraft takeoff and beachside parachute landing from our shaded spectator lounge.\n`;
+    text += `• **Free Secure Lockers**: Free lockers are provided at the dropzone to securely store your phone, wallet, passport, and bags while you are in the air.\n`;
+    text += `• **Dropzone Amenities**: Air-conditioned briefing rooms, clean restrooms, and refreshment stations are available on site.\n\n`;
+    text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
+    return text;
+  }
+
+  // Case 7: Transportation, Hotel Pickup & Bangkok Options
+  if (q.includes('transport') || q.includes('pickup') || q.includes('transfer') || q.includes('bangkok') || q.includes('hotel') || q.includes('taxi') || q.includes('get there')) {
+    text += `### Transportation & Hotel Transfers 🚐\n\n`;
+    text += `• **Pattaya Hotels**: Convenient round-trip transfers from any central Pattaya hotel to the dropzone can be arranged.\n`;
+    text += `• **Bangkok Transfers**: Since there is no skydiving inside Bangkok city center, fixed-price private vehicle transfers from Bangkok hotels or Suvarnabhumi Airport (BKK) are available upon request.\n`;
+    text += `• **Parking**: Free on-site parking is available if you prefer driving or taking a private taxi.\n\n`;
+    text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
+    return text;
+  }
+
+  // Case 8: Weight, age, or health & safety questions
   if (q.includes('weight') || q.includes('age') || q.includes('safe') || q.includes('scuba') || q.includes('medical') || q.includes('health') || q.includes('requirement') || q.includes('limit') || q.includes('aad') || q.includes('cypress')) {
     text += `### Safety & Eligibility Requirements 🛡️\n\n`;
     text += `Here are the essential requirements for our Sea View Skydiving experience:\n\n`;
@@ -136,17 +166,17 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     return text;
   }
 
-  // Case 6: Weather, cancellation, refunds, or hotel transfers
-  if (q.includes('weather') || q.includes('rain') || q.includes('cloud') || q.includes('wind') || q.includes('cancel') || q.includes('refund') || q.includes('reschedule') || q.includes('transfer') || q.includes('hotel')) {
+  // Case 9: Weather, cancellation, refunds, or hotel transfers
+  if (q.includes('weather') || q.includes('rain') || q.includes('cloud') || q.includes('wind') || q.includes('cancel') || q.includes('refund') || q.includes('reschedule')) {
     text += `### Weather, Booking & Cancellation Policies ⛅\n\n`;
     text += `• **Weather Guarantee**: Skydiving depends on safe coastal winds and visibility. If rain or low cloud ceilings occur, jumps are paused. You can reschedule for free to any date within 12 months, or receive a **100% full refund** immediately.\n`;
     text += `• **Booking**: No advance deposit is required to reserve your date.\n`;
-    text += `• **Hotel Transfers**: Round-trip transportation from central Pattaya hotels can be coordinated upon request.\n\n`;
+    text += `• **Load-by-Load Decisions**: Our dropzone evaluates wind and cloud safety load-by-load rather than relying on generic weather forecasts.\n\n`;
     text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
     return text;
   }
 
-  // Case 7: Itinerary, duration, or timeline
+  // Case 10: Itinerary, duration, or timeline
   if (q.includes('timeline') || q.includes('itinerary') || q.includes('how long') || q.includes('duration') || q.includes('schedule') || q.includes('hours')) {
     text += `### Dropzone Timeline & Experience Duration ⏱️\n\n`;
     text += `The full dropzone experience takes approximately **3 to 4 hours** from check-in to completion:\n\n`;
@@ -160,7 +190,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     return text;
   }
 
-  // Case 8: Clothing & Footwear
+  // Case 11: Clothing & Footwear
   if (q.includes('wear') || q.includes('clothes') || q.includes('clothing') || q.includes('shoes') || q.includes('attire') || q.includes('sneaker')) {
     text += `### What to Wear on Jump Day 👟\n\n`;
     text += `• **Clothing**: Comfortable athletic sportswear (t-shirt and shorts or athletic pants).\n`;
@@ -179,7 +209,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
   text += `• Ask **"Can you send me a brochure?"** for an instant downloadable PDF.\n`;
   text += `• Ask **"Can I see a video of the experience?"** to watch full HD freefall footage.\n`;
   text += `• Ask **"Send me the brochure and a video"** for both.\n`;
-  text += `• Ask about safety standards, weight limits, or scuba diving rules.\n\n`;
+  text += `• Ask about GoPro policies, spectator areas, hotel pickups, or safety rules.\n\n`;
   text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
   return text;
 }

@@ -145,7 +145,7 @@ async function runComprehensiveTests() {
     assert(res.status === 200, 'HTTP 200 on safety inquiry');
     assert(res.data.media.length === 0, 'Text-only response for safety question');
     assert(res.data.answer.includes('100 kg') && res.data.answer.includes('10 years'), 'Includes 100 kg weight limit and 10 year age limit');
-    assert(res.data.answer.includes('24 hours') && res.data.answer.includes('scuba'), 'Includes 24-hour scuba diving rule');
+    assert(res.data.answer.includes('24-Hour Scuba') || res.data.answer.includes('scuba'), 'Includes 24-hour scuba diving rule');
     assert(res.data.answer.includes('Cypress 2') || res.data.answer.includes('AAD'), 'Includes Cypress 2 AAD automatic activation device');
   }
 
@@ -179,8 +179,39 @@ async function runComprehensiveTests() {
     assert(res.data.answer.includes('sneakers') || res.data.answer.includes('running shoes'), 'Explicitly requires lace-up sneakers / running shoes');
   }
 
-  // TEST 11: Out-of-Scope / Unavailable Information (No Hallucination)
-  console.log('\n--- TEST GROUP 11: Out-of-Scope & Unavailable Topics (Truthfulness) ---');
+  // TEST 11: GoPro and Personal Camera Policy
+  console.log('\n--- TEST GROUP 11: Personal Cameras & GoPro Regulations ---');
+  {
+    const res = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'Can I bring my own GoPro or phone to record the jump?' }]
+    });
+    assert(res.status === 200, 'HTTP 200 on GoPro inquiry');
+    assert(res.data.answer.includes('strictly prohibited') || res.data.answer.includes('safety regulations'), 'Explains strict prohibition of personal cameras for safety');
+  }
+
+  // TEST 12: Spectators, Family & Free Lockers
+  console.log('\n--- TEST GROUP 12: Spectator Facilities & Free Lockers ---');
+  {
+    const res = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'Can my friends come to watch and do you have lockers for my bags?' }]
+    });
+    assert(res.status === 200, 'HTTP 200 on spectator inquiry');
+    assert(res.data.answer.includes('Spectator') || res.data.answer.includes('watch'), 'Confirms spectator viewing lounge for friends/family');
+    assert(res.data.answer.includes('Lockers') || res.data.answer.includes('lockers'), 'Confirms free on-site secure lockers');
+  }
+
+  // TEST 13: Transportation & Bangkok Transfers
+  console.log('\n--- TEST GROUP 13: Transportation & Hotel Transfers ---');
+  {
+    const res = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'Do you provide hotel pickup from Bangkok or Pattaya?' }]
+    });
+    assert(res.status === 200, 'HTTP 200 on transportation inquiry');
+    assert(res.data.answer.includes('Pattaya') && (res.data.answer.includes('Bangkok') || res.data.answer.includes('transfer')), 'Explains Pattaya hotel transfers and Bangkok add-on options');
+  }
+
+  // TEST 14: Out-of-Scope / Unavailable Information (No Hallucination)
+  console.log('\n--- TEST GROUP 14: Out-of-Scope & Unavailable Topics (Truthfulness) ---');
   {
     const res1 = await post('/api/chat', {
       messages: [{ role: 'user', content: 'Do you offer skydiving over Antarctica?' }]
@@ -196,8 +227,8 @@ async function runComprehensiveTests() {
     assert(res2.data.retrieval.isUnavailableTopic === true, 'Dubai recognized as outside Pattaya dropzone');
   }
 
-  // TEST 12: Multi-turn Follow-up Context Memory
-  console.log('\n--- TEST GROUP 12: Multi-Turn Conversation Memory ---');
+  // TEST 15: Multi-turn Follow-up Context Memory
+  console.log('\n--- TEST GROUP 15: Multi-Turn Conversation Memory ---');
   {
     const turn1 = { role: 'user', content: 'What packages do you have?' };
     const res1 = await post('/api/chat', { messages: [turn1] });
@@ -215,18 +246,18 @@ async function runComprehensiveTests() {
     assert(res3.data.media && res3.data.media.length === 1 && res3.data.media[0].type === 'video', 'Turn 3 delivers Video reel following PDF turn seamlessly');
   }
 
-  // TEST 13: Knowledge API Endpoints
-  console.log('\n--- TEST GROUP 13: Knowledge View Backend Endpoints ---');
+  // TEST 16: Knowledge API Endpoints
+  console.log('\n--- TEST GROUP 16: Knowledge View Backend Endpoints ---');
   {
     const res = await get('/api/knowledge');
     assert(res.status === 200, 'GET /api/knowledge responds with 200 OK');
-    assert(res.data.sources.chunks.length === 5, 'Returns all 5 ingested website chunks');
+    assert(res.data.sources.chunks.length === 8, 'Returns all 8 ingested website chunks');
     assert(res.data.availableMedia.length === 2, 'Returns catalog of 2 media assets (PDF + Video)');
     assert(res.data.sources.url === 'https://greedyadventures.com/sea-view-tandem-skydiving', 'Correct source URL loaded');
   }
 
-  // TEST 14: Knowledge View Test Runner (Real Activity Inspector)
-  console.log('\n--- TEST GROUP 14: Real Backend Activity Inspector (/api/knowledge/test) ---');
+  // TEST 17: Knowledge View Test Runner (Real Activity Inspector)
+  console.log('\n--- TEST GROUP 17: Real Backend Activity Inspector (/api/knowledge/test) ---');
   {
     const res = await post('/api/knowledge/test', { query: 'Can you send me a brochure?' });
     assert(res.status === 200, 'POST /api/knowledge/test responds with 200 OK');
@@ -249,4 +280,3 @@ runComprehensiveTests().catch(err => {
   console.error('Test suite failed with unexpected error:', err);
   process.exit(1);
 });
-

@@ -30,13 +30,7 @@ function tokenize(text: string): string[] {
 export function detectMediaIntent(query: string): MediaIntent {
   const q = query.toLowerCase().trim();
 
-  const brochureKeywords = ['brochure', 'pdf', 'pamphlet', 'leaflet', 'document', 'catalog', 'catalogue', 'handout', 'download'];
-  const videoKeywords = ['video', 'watch', 'clip', 'footage', 'teaser', 'film', 'movie', 'preview video', 'see a video', 'show a video', 'experience video', 'reel'];
-
-  const wantsBrochure = brochureKeywords.some(kw => q.includes(kw));
-  const wantsVideo = videoKeywords.some(kw => q.includes(kw));
-
-  // Explicit 'both' phrases or presence of both brochure and video
+  // Explicit 'both' phrases
   const bothPhrases = [
     'send both',
     'share both',
@@ -52,7 +46,7 @@ export function detectMediaIntent(query: string): MediaIntent {
     'both please'
   ];
 
-  if (bothPhrases.some(phrase => q.includes(phrase)) || (wantsBrochure && wantsVideo)) {
+  if (bothPhrases.some(phrase => q.includes(phrase))) {
     return 'both';
   }
 
@@ -61,10 +55,39 @@ export function detectMediaIntent(query: string): MediaIntent {
     return 'both';
   }
 
+  const brochureKeywords = ['brochure', 'pdf', 'pamphlet', 'leaflet', 'document', 'catalog', 'catalogue', 'handout', 'download brochure', 'download pdf'];
+  const videoKeywords = [
+    'video',
+    'watch video',
+    'watch a video',
+    'watch the video',
+    'watch the jump',
+    'watch footage',
+    'watch clip',
+    'clip',
+    'footage',
+    'teaser',
+    'film',
+    'movie',
+    'preview video',
+    'see a video',
+    'show a video',
+    'experience video',
+    'reel',
+    'video reel'
+  ];
+
+  const wantsBrochure = brochureKeywords.some(kw => q.includes(kw));
+  // Ensure "watch" in spectator context ("friends come to watch", "family watch") does not trigger video
+  const isSpectatorContext = q.includes('come to watch') || q.includes('friends watch') || q.includes('family watch') || q.includes('spectator');
+  const wantsVideo = !isSpectatorContext && (videoKeywords.some(kw => q.includes(kw)) || (q.includes('watch') && (q.includes('jump') || q.includes('freefall') || q.includes('it') || q.includes('this'))));
+
+  if (wantsBrochure && wantsVideo) {
+    return 'both';
+  }
   if (wantsBrochure) {
     return 'brochure';
   }
-
   if (wantsVideo) {
     return 'video';
   }
