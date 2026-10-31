@@ -53,6 +53,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
   const latestMessage = messages[messages.length - 1]?.content || '';
   const q = latestMessage.toLowerCase();
 
+  // Out of scope check: Truthful unavailable notice
   if (retrieval.isUnavailableTopic) {
     return `I apologize, but I do not have information or files regarding that topic. I am specifically trained to assist with **Greedy Adventures Sea View Skydiving** at our Pattaya Dropzone in Thailand.\n\nIf you have any questions regarding our 13,000-ft tandem jumps, packages, safety gear, or video options, I would be thrilled to help!\n\n[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
   }
@@ -81,7 +82,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     text += `• Step-by-step dropzone itinerary from briefing to beach landing\n`;
     text += `• USPA dual-parachute safety specifications & Cypress 2 AAD guidelines\n`;
     text += `• Health eligibility & booking terms\n\n`;
-    text += `You can click **"Open in New Tab"** or **"Download PDF"** right on the card below.\n\n`;
+    text += `You can click **"Open Brochure (PDF)"** or **"Download"** right on the card below.\n\n`;
     text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
     return text;
   }
@@ -95,8 +96,8 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     return text;
   }
 
-  // Case 4: Package inclusions question
-  if (q.includes('package') || q.includes('include') || q.includes('tier') || q.includes('price') || q.includes('cost') || q.includes('pricing')) {
+  // Case 4: Package inclusions & pricing question
+  if (q.includes('package') || q.includes('include') || q.includes('tier') || q.includes('price') || q.includes('cost') || q.includes('pricing') || q.includes('rate') || q.includes('how much')) {
     text += `### Greedy Adventures — Sea View Skydiving Packages 🪂\n\n`;
     text += `We offer **3 tiered tandem skydiving packages** tailored to your preferred media experience:\n\n`;
     text += `#### 1. Eco Tandem Skydive (Jump Only) — **10,500 THB**\n`;
@@ -122,15 +123,50 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     return text;
   }
 
-  // Case 5: Weight, age, or health questions
-  if (q.includes('weight') || q.includes('age') || q.includes('safe') || q.includes('scuba') || q.includes('medical') || q.includes('health') || q.includes('requirement')) {
+  // Case 5: Weight, age, or health & safety questions
+  if (q.includes('weight') || q.includes('age') || q.includes('safe') || q.includes('scuba') || q.includes('medical') || q.includes('health') || q.includes('requirement') || q.includes('limit') || q.includes('aad') || q.includes('cypress')) {
     text += `### Safety & Eligibility Requirements 🛡️\n\n`;
     text += `Here are the essential requirements for our Sea View Skydiving experience:\n\n`;
-    text += `• **Age**: Minimum 10 years old (participants under 18 require signed parental/guardian consent).\n`;
-    text += `• **Weight Limit**: Maximum 100 kg. Surcharges apply for weights between 95–100 kg due to instructor gear balance.\n`;
-    text += `• **Scuba Rule**: You must **NOT** scuba dive within 24 hours prior to skydiving to prevent decompression sickness.\n`;
-    text += `• **Health Restrictions**: Must be in good health. Not permitted for pregnant guests or individuals with severe heart/spinal conditions or epilepsy.\n`;
-    text += `• **Safety Gear**: 100% USPA-compliant dual parachute systems with Cypress 2 Automatic Activation Devices (AAD).\n\n`;
+    text += `• **Age Requirement**: Minimum age is 10 years old. Jumpers under 18 must have parental/guardian consent.\n`;
+    text += `• **Weight Limit**: Maximum limit is 100 kg. Surcharges apply for weights between 95–100 kg due to instructor gear balancing.\n`;
+    text += `• **24-Hour Scuba Rule**: You must **NOT** scuba dive within 24 hours prior to skydiving to prevent decompression sickness (the bends).\n`;
+    text += `• **Health Restrictions**: Not permitted for pregnant women, or participants with serious heart conditions, severe back injuries, or epilepsy.\n`;
+    text += `• **Dual-Canopy & AAD**: 100% USPA-compliant rigs fitted with Cypress 2 Automatic Activation Devices.\n\n`;
+    text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
+    return text;
+  }
+
+  // Case 6: Weather, cancellation, refunds, or hotel transfers
+  if (q.includes('weather') || q.includes('rain') || q.includes('cloud') || q.includes('wind') || q.includes('cancel') || q.includes('refund') || q.includes('reschedule') || q.includes('transfer') || q.includes('hotel')) {
+    text += `### Weather, Booking & Cancellation Policies ⛅\n\n`;
+    text += `• **Weather Guarantee**: Skydiving depends on safe coastal winds and visibility. If rain or low cloud ceilings occur, jumps are paused. You can reschedule for free to any date within 12 months, or receive a **100% full refund** immediately.\n`;
+    text += `• **Booking**: No advance deposit is required to reserve your date.\n`;
+    text += `• **Hotel Transfers**: Round-trip transportation from central Pattaya hotels can be coordinated upon request.\n\n`;
+    text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
+    return text;
+  }
+
+  // Case 7: Itinerary, duration, or timeline
+  if (q.includes('timeline') || q.includes('itinerary') || q.includes('how long') || q.includes('duration') || q.includes('schedule') || q.includes('hours')) {
+    text += `### Dropzone Timeline & Experience Duration ⏱️\n\n`;
+    text += `The full dropzone experience takes approximately **3 to 4 hours** from check-in to completion:\n\n`;
+    text += `1. **Arrival & Check-in** (20 mins): Registration and health waiver.\n`;
+    text += `2. **Safety Briefing** (20 mins): Body posture practice & gear fitting.\n`;
+    text += `3. **Scenic Flight** (15 mins): Climbing to 13,000 feet over Pattaya Bay.\n`;
+    text += `4. **Freefall** (45–60 sec): 220 km/h terminal velocity thrill.\n`;
+    text += `5. **Canopy Glide** (5–7 mins): Peaceful parachute descent with ocean views.\n`;
+    text += `6. **Landing & Media** (15 mins): Touchdown, certificate presentation, and digital media handover.\n\n`;
+    text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
+    return text;
+  }
+
+  // Case 8: Clothing & Footwear
+  if (q.includes('wear') || q.includes('clothes') || q.includes('clothing') || q.includes('shoes') || q.includes('attire') || q.includes('sneaker')) {
+    text += `### What to Wear on Jump Day 👟\n\n`;
+    text += `• **Clothing**: Comfortable athletic sportswear (t-shirt and shorts or athletic pants).\n`;
+    text += `• **Footwear**: Lace-up athletic sneakers/running shoes are required. Sandals, flip-flops, high heels, and boots are strictly prohibited.\n`;
+    text += `• **Jewelry**: Leave loose necklaces, rings, and dangling earrings in our secure lockers.\n`;
+    text += `• We provide custom jumpsuits and over-glasses skydiving goggles on site.\n\n`;
     text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
     return text;
   }
@@ -142,6 +178,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
   text += `• Ask **"What is included in the package?"** for complete tier pricing and details.\n`;
   text += `• Ask **"Can you send me a brochure?"** for an instant downloadable PDF.\n`;
   text += `• Ask **"Can I see a video of the experience?"** to watch full HD freefall footage.\n`;
+  text += `• Ask **"Send me the brochure and a video"** for both.\n`;
   text += `• Ask about safety standards, weight limits, or scuba diving rules.\n\n`;
   text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
   return text;
@@ -153,7 +190,6 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
 async function callGeminiApi(apiKey: string, messages: ChatMessage[], retrieval: RetrievalResult): Promise<string> {
   const systemInstruction = buildSystemPrompt(retrieval);
   
-  // Format conversation for Gemini API
   const contents = messages.map(m => ({
     role: m.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: m.content }]

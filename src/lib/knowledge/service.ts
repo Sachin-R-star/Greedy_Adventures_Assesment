@@ -28,23 +28,47 @@ function tokenize(text: string): string[] {
  * Detects whether the user is requesting a PDF brochure, video, both, or text only
  */
 export function detectMediaIntent(query: string): MediaIntent {
-  const q = query.toLowerCase();
+  const q = query.toLowerCase().trim();
 
   const brochureKeywords = ['brochure', 'pdf', 'pamphlet', 'leaflet', 'document', 'catalog', 'catalogue', 'handout', 'download'];
-  const videoKeywords = ['video', 'watch', 'clip', 'footage', 'teaser', 'film', 'movie', 'preview video', 'see a video', 'show a video', 'video of the experience'];
+  const videoKeywords = ['video', 'watch', 'clip', 'footage', 'teaser', 'film', 'movie', 'preview video', 'see a video', 'show a video', 'experience video', 'reel'];
 
   const wantsBrochure = brochureKeywords.some(kw => q.includes(kw));
   const wantsVideo = videoKeywords.some(kw => q.includes(kw));
 
-  if (wantsBrochure && wantsVideo) {
+  // Explicit 'both' phrases or presence of both brochure and video
+  const bothPhrases = [
+    'send both',
+    'share both',
+    'give me both',
+    'both of them',
+    'both brochure and video',
+    'brochure and a video',
+    'brochure and video',
+    'video and brochure',
+    'video and a brochure',
+    'pdf and video',
+    'video and pdf',
+    'both please'
+  ];
+
+  if (bothPhrases.some(phrase => q.includes(phrase)) || (wantsBrochure && wantsVideo)) {
     return 'both';
   }
+
+  // Standalone 'both'
+  if (q === 'both' || q === 'both please' || q === 'both thanks') {
+    return 'both';
+  }
+
   if (wantsBrochure) {
     return 'brochure';
   }
+
   if (wantsVideo) {
     return 'video';
   }
+
   return 'none';
 }
 
@@ -54,23 +78,35 @@ export function detectMediaIntent(query: string): MediaIntent {
 export function checkUnavailableTopic(query: string): boolean {
   const q = query.toLowerCase();
   
-  // List of obvious out-of-scope topics
-  const outOfScopePhrases = [
+  // List of out-of-scope topics / locations outside Pattaya dropzone
+  const outOfScopeKeywords = [
     'antarctica',
     'everest',
     'mars',
+    'moon',
     'bungee',
-    'scuba certification course',
+    'scuba certification',
+    'scuba course',
+    'scuba diving license',
     'deep sea submarine',
-    'helicopter to space',
+    'space travel',
+    'space flight',
     'pilot home address',
-    'personal phone number of the ceo',
+    'phone number of the ceo',
+    'personal phone number',
     'skiing',
-    'snowboarding',
-    'formula 1'
+    'snowboard',
+    'formula 1',
+    'f1',
+    'dubai',
+    'bali',
+    'france',
+    'switzerland',
+    'hot air balloon',
+    'helicopter to space'
   ];
 
-  return outOfScopePhrases.some(phrase => q.includes(phrase));
+  return outOfScopeKeywords.some(phrase => q.includes(phrase));
 }
 
 /**
@@ -106,7 +142,6 @@ export function retrieveKnowledge(query: string): RetrievalResult {
   // Take top chunks or default to the most essential chunks (overview + packages)
   let matchedChunks = scoredChunks.filter(sc => sc.score > 0).map(sc => sc.chunk);
   if (matchedChunks.length === 0) {
-    // If no strong keyword match but valid question, include overview and packages
     matchedChunks = [WEBSITE_SOURCE.chunks[0], WEBSITE_SOURCE.chunks[1]];
   }
 
