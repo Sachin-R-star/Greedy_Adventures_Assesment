@@ -15,8 +15,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Sea View Skydiving Pattaya — Greedy Adventures",
-  description: "Experience 13,000 feet coastal tandem skydiving over the Gulf of Thailand. Includes AI Assistant powered by assistant-ui and live Knowledge View.",
-  keywords: ["skydiving", "sea view skydiving", "greedy adventures", "pattaya skydiving", "tandem skydive", "thailand skydiving"],
+  description: "Experience 13,000-ft coastal tandem skydiving over the Gulf of Thailand with certified USPA instructors. Official booking prototype.",
+  keywords: ["skydiving", "sea view skydiving", "greedy adventures", "pattaya", "tandem skydive", "thailand"],
 };
 
 export default function RootLayout({
@@ -25,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#fafaf9] text-slate-900 antialiased selection:bg-orange-500 selection:text-white`}
       >
         {children}
       </body>

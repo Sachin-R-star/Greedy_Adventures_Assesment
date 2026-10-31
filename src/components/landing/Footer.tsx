@@ -2,83 +2,91 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Compass, Database, Bot, ExternalLink, Heart, Shield } from 'lucide-react';
+import { ParachuteSvg } from '@/components/common/SvgIcons';
+import { BookOpen, MessageSquare, ExternalLink, ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC<{ onOpenChat: () => void }> = ({ onOpenChat }) => {
   return (
-    <footer className="border-t border-slate-900 bg-slate-950 py-12 text-slate-400 text-xs">
+    <footer className="border-t border-stone-200 bg-[#fafaf9] py-16 text-stone-600 text-xs">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-stone-200">
           
+          {/* Brand & Project Info */}
           <div className="md:col-span-2 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-cyan-600 text-white">
-                <Compass className="h-4 w-4" />
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-stone-900 text-white">
+                <ParachuteSvg className="h-4 w-4" />
               </div>
-              <span className="font-extrabold text-white text-sm tracking-wide">
-                GREEDY ADVENTURES — SEA VIEW SKYDIVING
+              <span className="font-semibold text-stone-900 text-sm tracking-tight">
+                Greedy Adventures — Sea View Skydiving
               </span>
             </div>
-            <p className="text-slate-400 text-xs max-w-md leading-relaxed">
-              Full Stack Developer Assignment submission for Greedy Adventures. Built with Next.js 14, TypeScript, Tailwind CSS, and assistant-ui. Connecting customer inquiry to live AI backend and real-time knowledge retrieval.
+            <p className="text-stone-600 text-xs max-w-md leading-relaxed">
+              Full Stack Developer Assignment submission. Built with Next.js 14, TypeScript, Tailwind CSS, and assistant-ui. Connects customer queries to a grounded backend with dynamic PDF & video response formats.
             </p>
-            <div className="flex items-center gap-3 pt-2">
-              <span className="rounded bg-slate-900 px-2.5 py-1 text-[11px] font-mono text-cyan-300 border border-slate-800">
+            <div className="flex items-center gap-3 pt-2 text-[11px]">
+              <span className="inline-flex items-center gap-1 rounded bg-stone-200/70 px-2.5 py-1 font-medium text-stone-700">
                 Pattaya Dropzone, Thailand
               </span>
-              <span className="rounded bg-slate-900 px-2.5 py-1 text-[11px] font-mono text-amber-300 border border-slate-800">
-                USPA Certified Facility
+              <span className="inline-flex items-center gap-1 rounded bg-stone-200/70 px-2.5 py-1 font-medium text-stone-700">
+                <ShieldCheck className="h-3 w-3 text-emerald-700" />
+                USPA Certified Dropzone
               </span>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <h4 className="font-bold text-slate-200 uppercase tracking-wider text-[11px]">
-              System Navigation
+          {/* Navigation Links */}
+          <div className="space-y-2.5">
+            <h4 className="font-semibold text-stone-900 text-xs uppercase tracking-wider">
+              Navigation
             </h4>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2">
               <li>
-                <a href="#packages" className="hover:text-cyan-400 transition">
+                <a href="#packages" className="hover:text-stone-900 transition">
                   Packages & Pricing
                 </a>
               </li>
               <li>
-                <a href="#journey" className="hover:text-cyan-400 transition">
-                  Experience Journey
+                <a href="#journey" className="hover:text-stone-900 transition">
+                  Dropzone Journey
                 </a>
               </li>
               <li>
-                <a href="#safety" className="hover:text-cyan-400 transition">
-                  USPA Safety Standards
+                <a href="#safety" className="hover:text-stone-900 transition">
+                  Safety Protocols
                 </a>
               </li>
               <li>
-                <a href="#faq" className="hover:text-cyan-400 transition">
-                  Frequently Asked Questions
+                <a href="#faq" className="hover:text-stone-900 transition">
+                  FAQ & Policies
                 </a>
               </li>
             </ul>
           </div>
 
-          <div className="space-y-2">
-            <h4 className="font-bold text-slate-200 uppercase tracking-wider text-[11px]">
-              Reviewer Resources
+          {/* Assignment / Reviewer Links */}
+          <div className="space-y-2.5">
+            <h4 className="font-semibold text-stone-900 text-xs uppercase tracking-wider">
+              Assignment Tools
             </h4>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2">
               <li>
-                <Link href="/knowledge" className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300">
-                  <Database className="h-3 w-3" />
-                  <span>Knowledge View (Backend)</span>
+                <Link
+                  href="/knowledge"
+                  className="inline-flex items-center gap-1.5 font-medium text-orange-800 hover:text-orange-900"
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  <span>Knowledge View (Backend Activity)</span>
                 </Link>
               </li>
               <li>
                 <button
                   type="button"
                   onClick={onOpenChat}
-                  className="flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300"
+                  className="inline-flex items-center gap-1.5 hover:text-stone-900 transition"
                 >
-                  <Bot className="h-3 w-3" />
+                  <MessageSquare className="h-3.5 w-3.5" />
                   <span>Open AI Assistant</span>
                 </button>
               </li>
@@ -86,9 +94,9 @@ export const Footer: React.FC<{ onOpenChat: () => void }> = ({ onOpenChat }) => 
                 <a
                   href="/assets/brochure/sea-view-skydiving-brochure.pdf"
                   target="_blank"
-                  className="hover:text-slate-300 transition"
+                  className="hover:text-stone-900 transition"
                 >
-                  Sample Brochure (PDF)
+                  View Sample Brochure (PDF)
                 </a>
               </li>
               <li>
@@ -96,10 +104,10 @@ export const Footer: React.FC<{ onOpenChat: () => void }> = ({ onOpenChat }) => 
                   href="https://greedyadventures.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-slate-300 transition"
+                  className="inline-flex items-center gap-1 hover:text-stone-900 transition"
                 >
-                  <span>Official Greedy Adventures</span>
-                  <ExternalLink className="h-2.5 w-2.5" />
+                  <span>Official Website</span>
+                  <ExternalLink className="h-3 w-3" />
                 </a>
               </li>
             </ul>
@@ -107,13 +115,10 @@ export const Footer: React.FC<{ onOpenChat: () => void }> = ({ onOpenChat }) => 
 
         </div>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-          <div>
-            © {new Date().getFullYear()} Greedy Adventures — Sea View Skydiving Prototype. All sample assets marked as Demo Material.
-          </div>
-          <div className="flex items-center gap-1">
-            <span>Built with Next.js, assistant-ui & Google Deepmind Pair Programming</span>
-          </div>
+        {/* Bottom copyright */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500">
+          <p>© 2026 Greedy Adventures assignment evaluation. All demo material clearly marked.</p>
+          <p>Next.js 14 • TypeScript • Tailwind CSS • assistant-ui</p>
         </div>
 
       </div>

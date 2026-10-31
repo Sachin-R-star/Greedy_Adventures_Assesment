@@ -3,17 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Compass,
-  ArrowRight,
-  Bot,
-  ShieldCheck,
-  Star,
-  Eye,
-  FileText,
-  PlayCircle,
-  Database,
-  Wind
-} from 'lucide-react';
+  AltitudePlaneSvg,
+  SpeedometerSvg,
+  CoastlineWaveSvg,
+  SafetyShieldSvg,
+  ParachuteSvg
+} from '../common/SvgIcons';
+import { ArrowRight, MessageSquare, Star, FileText, Film, Database } from 'lucide-react';
 
 interface HeroProps {
   onOpenChat: (query?: string) => void;
@@ -21,126 +17,131 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28">
-      {/* Background Gradient & Light Effects */}
-      <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-        <div className="h-[550px] w-[550px] rounded-full bg-cyan-600/15 blur-[120px]" />
-        <div className="absolute right-10 top-20 h-[350px] w-[350px] rounded-full bg-sky-500/10 blur-[100px]" />
-        <div className="absolute left-10 bottom-10 h-[300px] w-[300px] rounded-full bg-amber-500/10 blur-[110px]" />
-      </div>
-
+    <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24 bg-white border-b border-stone-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        {/* Top Trust Badge */}
+        {/* Top Badges */}
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-slate-900/90 px-3.5 py-1.5 text-xs font-semibold text-cyan-300 shadow-md backdrop-blur">
-            <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-stone-50 px-3.5 py-1 text-xs font-semibold text-stone-700 shadow-xs">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
             <span>Pattaya Dropzone, Thailand</span>
-            <span className="text-slate-600">•</span>
-            <span className="flex items-center gap-1 text-emerald-400">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              100% USPA Certified Safety Record
-            </span>
+            <span className="text-stone-300">•</span>
+            <span>USPA Certified Tandem Facility</span>
           </div>
+
           <Link
             href="/knowledge"
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-950/20 px-3 py-1.5 text-xs font-medium text-amber-300 transition hover:bg-amber-950/40"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium text-stone-600 transition hover:bg-stone-100 hover:text-stone-900"
           >
-            <Database className="h-3 w-3" />
-            <span>Knowledge Base Live</span>
+            <Database className="h-3 w-3 text-stone-500" />
+            <span>Open Knowledge View</span>
           </Link>
         </div>
 
-        {/* Headline */}
+        {/* Main Editorial Headline */}
         <div className="mt-8 text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Soar 13,000 Feet Above the{' '}
-            <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-amber-300 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-extrabold tracking-tight text-stone-950 sm:text-6xl lg:text-7xl">
+            Tandem Skydiving Above the{' '}
+            <span className="text-orange-600">
               Gulf of Thailand
             </span>
           </h1>
-          <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-light">
-            Feel the raw adrenaline of a 60-second freefall at 220 km/h, followed by a breathtaking 5-minute canopy glide over Pattaya Bay. Handcrafted by Greedy Adventures.
+          <p className="mt-5 text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed">
+            Jump from 13,000 feet, experience 60 seconds of 220 km/h freefall, and enjoy a serene 5-minute coastal canopy descent over Pattaya’s turquoise waters.
           </p>
 
-          {/* Action CTAs */}
-          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+          {/* Action Buttons */}
+          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => onOpenChat()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-sky-600 px-7 py-4 text-sm font-bold text-white shadow-xl shadow-cyan-950/60 transition duration-300 hover:from-cyan-500 hover:to-sky-500 hover:scale-102 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-lg bg-orange-600 px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600"
             >
-              <Bot className="h-5 w-5" />
-              <span>Ask AI Skydiving Concierge</span>
+              <MessageSquare className="h-4 w-4" />
+              <span>Ask Skydiving Concierge</span>
               <ArrowRight className="h-4 w-4" />
             </button>
 
             <a
               href="#packages"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900/90 px-6 py-4 text-sm font-semibold text-slate-200 shadow-md backdrop-blur transition hover:border-slate-700 hover:bg-slate-800 hover:text-white"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-stone-300 bg-white px-6 py-3.5 text-sm font-semibold text-stone-800 shadow-xs transition hover:bg-stone-50 hover:text-stone-950"
             >
-              <Eye className="h-4 w-4 text-cyan-400" />
-              <span>Explore Packages (From 10,500 THB)</span>
+              <span>View Packages & Rates (From 10,500 THB)</span>
             </a>
           </div>
 
-          {/* Quick Chat Triggers */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
-            <span className="font-medium text-slate-500">Quick question shortcuts:</span>
+          {/* Prompt Shortcuts */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-stone-500">
+            <span className="font-medium text-stone-400">Quick prompts for the chatbot:</span>
             <button
               onClick={() => onOpenChat('What is included in the package?')}
-              className="rounded-lg border border-slate-800 bg-slate-900/70 px-2.5 py-1 text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 transition"
+              className="rounded-md border border-stone-200 bg-stone-50 px-2.5 py-1 text-stone-700 hover:border-stone-400 hover:bg-white transition"
             >
               "What is included in the package?"
             </button>
             <button
               onClick={() => onOpenChat('Can you send me a brochure?')}
-              className="rounded-lg border border-slate-800 bg-slate-900/70 px-2.5 py-1 text-slate-300 hover:border-rose-500/50 hover:text-rose-300 transition"
+              className="rounded-md border border-stone-200 bg-stone-50 px-2.5 py-1 text-stone-700 hover:border-stone-400 hover:bg-white transition"
             >
               "Can you send me a brochure?"
             </button>
             <button
               onClick={() => onOpenChat('Can I see a video of the experience?')}
-              className="rounded-lg border border-slate-800 bg-slate-900/70 px-2.5 py-1 text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 transition"
+              className="rounded-md border border-stone-200 bg-stone-50 px-2.5 py-1 text-stone-700 hover:border-stone-400 hover:bg-white transition"
             >
               "Can I see a video?"
             </button>
           </div>
         </div>
 
-        {/* Feature Stat Cards Bar */}
-        <div className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-lg backdrop-blur transition hover:border-slate-700">
-            <div className="text-2xl sm:text-3xl font-extrabold text-cyan-400">13,000 FT</div>
-            <div className="mt-1 text-xs font-semibold text-slate-200">Exit Altitude</div>
-            <p className="mt-0.5 text-[11px] text-slate-400">Scenic flight over Gulf of Thailand</p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-lg backdrop-blur transition hover:border-slate-700">
-            <div className="text-2xl sm:text-3xl font-extrabold text-sky-400">220 KM/H</div>
-            <div className="mt-1 text-xs font-semibold text-slate-200">Freefall Speed</div>
-            <p className="mt-0.5 text-[11px] text-slate-400">45-60 seconds of terminal velocity</p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-lg backdrop-blur transition hover:border-slate-700">
-            <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">5-7 MIN</div>
-            <div className="mt-1 text-xs font-semibold text-slate-200">Canopy Gliding</div>
-            <p className="mt-0.5 text-[11px] text-slate-400">Peaceful coastal descent & beach view</p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-lg backdrop-blur transition hover:border-slate-700">
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">100%</div>
-            <div className="mt-1 text-xs font-semibold text-slate-200">USPA Safety</div>
-            <p className="mt-0.5 text-[11px] text-slate-400">Cypress 2 AAD auto-deploy backup</p>
-          </div>
-
-          <div className="col-span-2 sm:col-span-1 rounded-2xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-lg backdrop-blur transition hover:border-slate-700">
-            <div className="flex items-center gap-1 text-2xl sm:text-3xl font-extrabold text-yellow-400">
-              4.9 <Star className="h-5 w-5 fill-yellow-400 text-yellow-400 inline" />
+        {/* Clean Feature Metric Cards with SVGs */}
+        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          
+          <div className="rounded-xl border border-stone-200 bg-stone-50/60 p-4 shadow-xs">
+            <div className="flex items-center gap-2 text-orange-600 mb-2">
+              <AltitudePlaneSvg className="h-5 w-5" />
             </div>
-            <div className="mt-1 text-xs font-semibold text-slate-200">Customer Rating</div>
-            <p className="mt-0.5 text-[11px] text-slate-400">Over 1,200+ successful tandem jumps</p>
+            <div className="text-2xl sm:text-3xl font-extrabold text-stone-900">13,000 FT</div>
+            <div className="mt-1 text-xs font-semibold text-stone-800">Jump Altitude</div>
+            <p className="mt-0.5 text-[11px] text-stone-500">Scenic flight over Pattaya Bay</p>
           </div>
+
+          <div className="rounded-xl border border-stone-200 bg-stone-50/60 p-4 shadow-xs">
+            <div className="flex items-center gap-2 text-orange-600 mb-2">
+              <SpeedometerSvg className="h-5 w-5" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-stone-900">220 KM/H</div>
+            <div className="mt-1 text-xs font-semibold text-stone-800">Terminal Velocity</div>
+            <p className="mt-0.5 text-[11px] text-stone-500">45-60 sec pure freefall</p>
+          </div>
+
+          <div className="rounded-xl border border-stone-200 bg-stone-50/60 p-4 shadow-xs">
+            <div className="flex items-center gap-2 text-orange-600 mb-2">
+              <CoastlineWaveSvg className="h-5 w-5" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-stone-900">5-7 MIN</div>
+            <div className="mt-1 text-xs font-semibold text-stone-800">Canopy Ride</div>
+            <p className="mt-0.5 text-[11px] text-stone-500">Ocean view glide & beach landing</p>
+          </div>
+
+          <div className="rounded-xl border border-stone-200 bg-stone-50/60 p-4 shadow-xs">
+            <div className="flex items-center gap-2 text-emerald-600 mb-2">
+              <SafetyShieldSvg className="h-5 w-5" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-stone-900">100%</div>
+            <div className="mt-1 text-xs font-semibold text-stone-800">USPA Safety</div>
+            <p className="mt-0.5 text-[11px] text-stone-500">Dual parachute + Cypress 2 AAD</p>
+          </div>
+
+          <div className="col-span-2 sm:col-span-1 rounded-xl border border-stone-200 bg-stone-50/60 p-4 shadow-xs">
+            <div className="flex items-center gap-1 text-amber-500 mb-2">
+              <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-stone-900">4.9 / 5</div>
+            <div className="mt-1 text-xs font-semibold text-stone-800">Customer Rating</div>
+            <p className="mt-0.5 text-[11px] text-stone-500">1,200+ verified tandem jumps</p>
+          </div>
+
         </div>
 
       </div>

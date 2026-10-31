@@ -3,24 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  Database,
   ArrowLeft,
   ExternalLink,
   FileText,
   Film,
   Search,
-  Sparkles,
   CheckCircle2,
-  Clock,
+  Calendar,
   Layers,
   Code2,
   PlayCircle,
   AlertTriangle,
   Send,
   Loader2,
-  Calendar,
-  ShieldCheck
+  BookOpen
 } from 'lucide-react';
+import { ParachuteSvg } from '@/components/common/SvgIcons';
 import { WebsiteSource, MediaAsset } from '@/lib/knowledge/data';
 
 interface TestResult {
@@ -65,7 +63,6 @@ export default function KnowledgePage() {
   const [testResult, setTestResult] = useState<TestResult | null>(null);
   const [testError, setTestError] = useState<string | null>(null);
 
-  // Load public knowledge from /api/knowledge
   useEffect(() => {
     async function fetchKnowledge() {
       try {
@@ -82,7 +79,6 @@ export default function KnowledgePage() {
     fetchKnowledge();
   }, []);
 
-  // Run initial test query once loaded
   useEffect(() => {
     runTestQuery('What is included in the package?');
   }, []);
@@ -121,133 +117,133 @@ export default function KnowledgePage() {
     'Can you send me a brochure?',
     'Can I see a video of the experience?',
     'Send me the brochure and a video.',
-    'Do you have skydiving in Antarctica?'
+    'Do you offer skydiving in Antarctica?'
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-white">
+    <div className="min-h-screen bg-[#fafaf9] text-stone-900 antialiased selection:bg-amber-100 selection:text-stone-900">
+      
       {/* Top Header */}
-      <header className="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-stone-200 bg-white/95 backdrop-blur-xs">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-medium text-stone-700 transition hover:bg-stone-100 hover:text-stone-900"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Back to Demo</span>
             </Link>
-            <div className="h-4 w-px bg-slate-800" />
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 ring-1 ring-cyan-500/20">
-                <Database className="h-4 w-4" />
+            <div className="h-4 w-px bg-stone-200" />
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-stone-900 text-white">
+                <ParachuteSvg className="h-4 w-4" />
               </div>
               <div>
-                <h1 className="text-sm font-bold text-white tracking-wide">
-                  Backend Knowledge Base & Model Inspector
+                <h1 className="text-sm font-semibold text-stone-900">
+                  Knowledge View & Model Activity Inspector
                 </h1>
-                <p className="text-[11px] text-slate-400">
-                  Read-Only Backend State • Grounded Sources & Real Retrieval Activity
+                <p className="text-[11px] text-stone-500">
+                  Read-only backend state • Grounded website sources & live query inspection
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-400 ring-1 ring-emerald-500/20">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-800 border border-emerald-200">
+              <span className="h-2 w-2 rounded-full bg-emerald-600" />
               Backend Connected
             </span>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Container */}
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-10">
         
-        {/* Intro Banner */}
-        <div className="rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-950/30 via-slate-900 to-slate-900 p-6 shadow-xl">
+        {/* Requirement Banner */}
+        <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <span className="rounded bg-cyan-500/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-cyan-300 ring-1 ring-cyan-500/30">
-                Assignment Requirement
+              <span className="rounded bg-stone-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-stone-700">
+                Evaluation Rubric: Knowledge View
               </span>
-              <h2 className="mt-2 text-xl font-bold text-white">
-                Live Knowledge Architecture & Query Testing Console
+              <h2 className="mt-2 text-xl font-bold font-serif text-stone-900">
+                Verified Dropzone Grounding & Activity Monitor
               </h2>
-              <p className="mt-1 text-sm text-slate-300 max-w-3xl leading-relaxed">
-                This dashboard displays the exact website source chunks ingested into the chatbot and the available media catalog. Use the test console below to verify the real backend retrieval, media detection, and source context passed to the AI model.
+              <p className="mt-1 text-xs text-stone-600 max-w-3xl leading-relaxed">
+                Displays the website sources loaded into the chatbot: page title, URL, capture date, and text chunks. The test console below executes real backend retrieval, media selection, and model invocation to verify live system behavior.
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-3 text-right">
-                <div className="text-xs text-slate-400">Website Sources</div>
-                <div className="text-lg font-bold text-cyan-400">1 Document / 5 Chunks</div>
+              <div className="rounded-lg border border-stone-200 bg-stone-50 p-3 text-right">
+                <div className="text-[11px] text-stone-500">Website Sources</div>
+                <div className="text-base font-bold text-stone-900">1 Page / 5 Chunks</div>
               </div>
-              <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-3 text-right">
-                <div className="text-xs text-slate-400">Media Assets</div>
-                <div className="text-lg font-bold text-amber-400">2 Assets (PDF + MP4)</div>
+              <div className="rounded-lg border border-stone-200 bg-stone-50 p-3 text-right">
+                <div className="text-[11px] text-stone-500">Media Assets</div>
+                <div className="text-base font-bold text-stone-900">2 Assets (PDF + MP4)</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* SECTION 1: INTERACTIVE REAL TEST QUESTION CONSOLE */}
+        {/* SECTION 1: LIVE TEST CONSOLE (REAL BACKEND ACTIVITY) */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-amber-400" />
-              <h3 className="text-lg font-bold text-white">
-                Live Backend Retrieval & Model Input Inspector
+            <div>
+              <h3 className="text-base font-semibold text-stone-900">
+                1. Test Question Console (Real Backend Execution)
               </h3>
+              <p className="text-xs text-stone-500">
+                Shows the actual source text passed to the model and any PDF/video selected for any question.
+              </p>
             </div>
-            <span className="text-xs text-slate-400">
-              *Reflects real backend activity and source assembly
-            </span>
           </div>
 
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-6 shadow-xl">
+          <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs">
             {/* Input & Presets */}
             <div className="space-y-3">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-                Run a Test Query Against Backend:
+              <label className="text-xs font-semibold uppercase tracking-wider text-stone-600">
+                Run Query Against Backend:
               </label>
 
               <div className="flex flex-col sm:flex-row gap-2">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
+                  <Search className="absolute left-3.5 top-3 h-4 w-4 text-stone-400" />
                   <input
                     type="text"
                     value={testQuery}
                     onChange={(e) => setTestQuery(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && runTestQuery(testQuery)}
-                    placeholder="Enter any test question (e.g. What is included in the package?)"
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 py-2.5 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                    placeholder="Enter test query (e.g., What is included in the package?)"
+                    className="w-full rounded-lg border border-stone-300 bg-white py-2 pl-9 pr-3 text-sm text-stone-900 placeholder-stone-400 focus:border-stone-900 focus:outline-none focus:ring-1 focus:ring-stone-900"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => runTestQuery(testQuery)}
                   disabled={isTesting || !testQuery.trim()}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-stone-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:bg-stone-200 disabled:text-stone-400"
                 >
                   {isTesting ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>Testing Backend...</span>
+                      <span>Executing...</span>
                     </>
                   ) : (
                     <>
                       <Send className="h-4 w-4" />
-                      <span>Inspect Backend</span>
+                      <span>Inspect Activity</span>
                     </>
                   )}
                 </button>
               </div>
 
-              {/* Quick Preset Buttons */}
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="text-xs text-slate-400">Required rubric checks:</span>
+              {/* Preset buttons */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                <span className="text-xs text-stone-500 font-medium">Assignment Test Cases:</span>
                 {presetQueries.map((q, idx) => (
                   <button
                     key={idx}
@@ -256,10 +252,10 @@ export default function KnowledgePage() {
                       setTestQuery(q);
                       runTestQuery(q);
                     }}
-                    className={`rounded-lg border px-2.5 py-1 text-xs transition ${
+                    className={`rounded-full border px-2.5 py-1 text-xs transition ${
                       testQuery === q
-                        ? 'border-cyan-500 bg-cyan-500/20 text-cyan-200'
-                        : 'border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 hover:text-white'
+                        ? 'border-stone-900 bg-stone-900 text-white font-medium'
+                        : 'border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 hover:border-stone-300'
                     }`}
                   >
                     {q}
@@ -269,88 +265,89 @@ export default function KnowledgePage() {
             </div>
 
             {testError && (
-              <div className="mt-4 flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-950/30 p-3 text-xs text-rose-300">
-                <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0" />
+              <div className="mt-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+                <AlertTriangle className="h-4 w-4 text-red-600 shrink-0" />
                 <span>{testError}</span>
               </div>
             )}
 
             {/* Test Results Display */}
             {testResult && (
-              <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12 pt-6 border-t border-slate-800">
+              <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12 pt-6 border-t border-stone-200">
                 
-                {/* Column 1: Retrieval & Media Selection */}
+                {/* Column 1: Metadata & Selected Media */}
                 <div className="lg:col-span-5 space-y-4">
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
-                      <Layers className="h-4 w-4" />
-                      Backend Retrieval Metadata
+                  
+                  <div className="rounded-lg border border-stone-200 bg-stone-50/70 p-4 text-xs">
+                    <h4 className="font-semibold text-stone-900 uppercase tracking-wider text-[11px] mb-3 flex items-center gap-2">
+                      <Layers className="h-3.5 w-3.5 text-stone-700" />
+                      Backend Activity Metadata
                     </h4>
 
-                    <div className="mt-3 space-y-2 text-xs">
-                      <div className="flex justify-between py-1 border-b border-slate-900">
-                        <span className="text-slate-400">Media Intent Detected:</span>
-                        <span className="font-mono font-bold uppercase text-amber-300">
+                    <div className="space-y-2">
+                      <div className="flex justify-between py-1 border-b border-stone-200/80">
+                        <span className="text-stone-500">Media Intent:</span>
+                        <span className="font-mono font-bold uppercase text-stone-900">
                           {testResult.retrieval.mediaIntent}
                         </span>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-slate-900">
-                        <span className="text-slate-400">Source Chunks Matched:</span>
-                        <span className="font-mono text-cyan-300">
+                      <div className="flex justify-between py-1 border-b border-stone-200/80">
+                        <span className="text-stone-500">Source Chunks Matched:</span>
+                        <span className="font-mono text-stone-800">
                           {testResult.retrieval.matchedCount} chunk(s)
                         </span>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-slate-900">
-                        <span className="text-slate-400">Out of Scope / Unavailable:</span>
-                        <span className={`font-mono ${testResult.retrieval.isUnavailableTopic ? 'text-rose-400 font-bold' : 'text-emerald-400'}`}>
-                          {testResult.retrieval.isUnavailableTopic ? 'YES (Fallback triggered)' : 'NO (In Dropzone Scope)'}
+                      <div className="flex justify-between py-1 border-b border-stone-200/80">
+                        <span className="text-stone-500">Out of Scope / Unavailable:</span>
+                        <span className={`font-mono font-medium ${testResult.retrieval.isUnavailableTopic ? 'text-red-700 font-bold' : 'text-emerald-700'}`}>
+                          {testResult.retrieval.isUnavailableTopic ? 'YES (Truthful unavailable)' : 'NO (Grounded in Dropzone)'}
                         </span>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-slate-900">
-                        <span className="text-slate-400">Model Engine:</span>
-                        <span className="font-mono text-slate-200">
-                          {testResult.execution.engine} {testResult.execution.isMock ? '(Demo Mode)' : ''}
+                      <div className="flex justify-between py-1 border-b border-stone-200/80">
+                        <span className="text-stone-500">Model Engine:</span>
+                        <span className="font-mono text-stone-800">
+                          {testResult.execution.engine} {testResult.execution.isMock ? '(Demo Engine)' : ''}
                         </span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span className="text-slate-400">Backend Execution Time:</span>
-                        <span className="font-mono text-emerald-400">
+                        <span className="text-stone-500">Latency:</span>
+                        <span className="font-mono text-stone-800">
                           {testResult.execution.latencyMs} ms
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Selected Media Result */}
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-2">
-                      <PlayCircle className="h-4 w-4" />
+                  {/* Selected Media Attachments */}
+                  <div className="rounded-lg border border-stone-200 bg-stone-50/70 p-4">
+                    <h4 className="font-semibold text-stone-900 uppercase tracking-wider text-[11px] mb-2 flex items-center gap-2">
+                      <PlayCircle className="h-3.5 w-3.5 text-stone-700" />
                       Selected Media Attachments ({testResult.retrieval.selectedMedia.length})
                     </h4>
 
                     {testResult.retrieval.selectedMedia.length === 0 ? (
-                      <p className="mt-2 text-xs text-slate-500 italic">
-                        No media attachments requested for this query. The model delivers text-only response.
+                      <p className="mt-2 text-xs text-stone-500 italic">
+                        No media requested for this question. Model delivers text-only response format as expected.
                       </p>
                     ) : (
                       <div className="mt-3 space-y-2">
                         {testResult.retrieval.selectedMedia.map((m) => (
                           <div
                             key={m.id}
-                            className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900 p-2.5 text-xs"
+                            className="flex items-center justify-between rounded-lg border border-stone-200 bg-white p-2.5 text-xs"
                           >
                             <div className="flex items-center gap-2">
                               {m.type === 'pdf' ? (
-                                <FileText className="h-4 w-4 text-rose-400" />
+                                <FileText className="h-4 w-4 text-red-600 shrink-0" />
                               ) : (
-                                <Film className="h-4 w-4 text-cyan-400" />
+                                <Film className="h-4 w-4 text-stone-700 shrink-0" />
                               )}
                               <div>
-                                <div className="font-semibold text-slate-200">{m.title}</div>
-                                <div className="text-[11px] text-slate-400 font-mono">{m.filename}</div>
+                                <div className="font-semibold text-stone-900">{m.title}</div>
+                                <div className="text-[11px] text-stone-500 font-mono">{m.filename}</div>
                               </div>
                             </div>
-                            <span className="rounded bg-amber-500/20 px-2 py-0.5 text-[10px] font-semibold text-amber-300">
+                            <span className="rounded bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-800 border border-amber-200">
                               {m.demoLabel}
                             </span>
                           </div>
@@ -362,31 +359,33 @@ export default function KnowledgePage() {
 
                 {/* Column 2: Actual Source Text Passed to Model */}
                 <div className="lg:col-span-7 space-y-4">
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
+                  
+                  <div className="rounded-lg border border-stone-200 bg-stone-50/70 p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-2">
-                        <Code2 className="h-4 w-4" />
-                        Actual Source Text Passed to Model Context
+                      <h4 className="font-semibold text-stone-900 uppercase tracking-wider text-[11px] flex items-center gap-2">
+                        <Code2 className="h-3.5 w-3.5 text-stone-700" />
+                        Actual Source Text Passed to Model
                       </h4>
-                      <span className="text-[10px] text-slate-500 font-mono">
-                        {testResult.retrieval.actualSourceTextPassedToModel.length} chars
+                      <span className="text-[10px] text-stone-500 font-mono">
+                        {testResult.retrieval.actualSourceTextPassedToModel.length} characters
                       </span>
                     </div>
 
-                    <pre className="mt-2 max-h-56 overflow-y-auto rounded-lg border border-slate-800 bg-slate-950 p-3 text-[11px] leading-relaxed text-slate-300 font-mono whitespace-pre-wrap scrollbar-thin">
+                    <pre className="mt-2 max-h-56 overflow-y-auto rounded-lg border border-stone-200 bg-white p-3 text-[11px] leading-relaxed text-stone-800 font-mono whitespace-pre-wrap">
                       {testResult.retrieval.actualSourceTextPassedToModel}
                     </pre>
                   </div>
 
-                  {/* Generated Answer Preview */}
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">
-                      Backend Generated Answer Output
+                  {/* Generated Answer */}
+                  <div className="rounded-lg border border-stone-200 bg-stone-50/70 p-4">
+                    <h4 className="font-semibold text-stone-900 uppercase tracking-wider text-[11px] mb-2">
+                      Model Generated Answer
                     </h4>
-                    <div className="max-h-48 overflow-y-auto rounded-lg border border-slate-800 bg-slate-950 p-3 text-xs text-slate-200 leading-relaxed whitespace-pre-wrap scrollbar-thin">
+                    <div className="max-h-48 overflow-y-auto rounded-lg border border-stone-200 bg-white p-3 text-xs text-stone-800 leading-relaxed whitespace-pre-wrap">
                       {testResult.execution.generatedAnswer}
                     </div>
                   </div>
+
                 </div>
 
               </div>
@@ -396,23 +395,22 @@ export default function KnowledgePage() {
 
         {/* SECTION 2: LOADED WEBSITE SOURCES */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Database className="h-5 w-5 text-cyan-400" />
-              <h3 className="text-lg font-bold text-white">
-                Website Sources Loaded into Chatbot
-              </h3>
-            </div>
-            <span className="text-xs text-slate-400">Read-only live representation</span>
+          <div>
+            <h3 className="text-base font-semibold text-stone-900">
+              2. Website Sources Loaded into Chatbot
+            </h3>
+            <p className="text-xs text-stone-500">
+              Official public website content ingested and chunked for contextual retrieval.
+            </p>
           </div>
 
           {sources && (
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-xl">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200 pb-5">
                 <div>
-                  <h4 className="text-base font-bold text-slate-100 flex items-center gap-2">
-                    {sources.pageTitle}
-                    <span className="rounded bg-cyan-500/10 px-2 py-0.5 text-[10px] font-semibold text-cyan-300 ring-1 ring-cyan-500/20">
+                  <h4 className="text-base font-bold text-stone-900 flex items-center gap-2 flex-wrap">
+                    <span>{sources.pageTitle}</span>
+                    <span className="rounded bg-stone-100 px-2 py-0.5 text-[10px] font-semibold text-stone-700 border border-stone-200">
                       Primary Knowledge Source
                     </span>
                   </h4>
@@ -420,23 +418,23 @@ export default function KnowledgePage() {
                     href={sources.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-1 inline-flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 hover:underline"
+                    className="mt-1 inline-flex items-center gap-1.5 text-xs text-stone-700 hover:text-stone-900 hover:underline"
                   >
                     <span>{sources.url}</span>
                     <ExternalLink className="h-3 w-3" />
                   </a>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
+                  <p className="mt-2 text-xs text-stone-600 leading-relaxed">
                     {sources.description}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-3 shrink-0 text-xs">
-                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-2.5">
-                    <span className="text-slate-400 flex items-center gap-1">
-                      <Calendar className="h-3.5 w-3.5 text-cyan-400" />
+                  <div className="rounded-lg border border-stone-200 bg-stone-50 p-2.5">
+                    <span className="text-stone-500 flex items-center gap-1 text-[11px]">
+                      <Calendar className="h-3 w-3 text-stone-600" />
                       Capture Date:
                     </span>
-                    <span className="font-mono font-bold text-slate-200 mt-0.5 block">
+                    <span className="font-mono font-bold text-stone-800 mt-0.5 block">
                       {sources.captureDate}
                     </span>
                   </div>
@@ -444,36 +442,36 @@ export default function KnowledgePage() {
               </div>
 
               {/* Source Chunks */}
-              <div className="mt-6 space-y-4">
-                <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  Ingested Knowledge Chunks ({sources.chunks.length} Chunks Available for RAG Retrieval):
+              <div className="mt-6 space-y-3">
+                <h5 className="text-xs font-semibold uppercase tracking-wider text-stone-600">
+                  Ingested Knowledge Chunks ({sources.chunks.length} Chunks Available for Retrieval):
                 </h5>
 
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                   {sources.chunks.map((chunk) => (
                     <div
                       key={chunk.id}
-                      className="rounded-xl border border-slate-800/80 bg-slate-950/80 p-4 transition hover:border-slate-700"
+                      className="rounded-lg border border-stone-200 bg-stone-50/50 p-4 transition hover:bg-stone-50"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="rounded bg-slate-800 px-2 py-0.5 text-[10px] font-bold text-cyan-300">
+                        <span className="rounded bg-stone-200/80 px-2 py-0.5 text-[10px] font-medium text-stone-800">
                           {chunk.category}
                         </span>
-                        <span className="text-[10px] font-mono text-slate-500">
+                        <span className="text-[10px] font-mono text-stone-400">
                           id: {chunk.id}
                         </span>
                       </div>
-                      <h6 className="mt-2 text-sm font-semibold text-slate-200">
+                      <h6 className="mt-2 text-sm font-semibold text-stone-900">
                         {chunk.title}
                       </h6>
-                      <p className="mt-1.5 text-xs text-slate-400 leading-relaxed line-clamp-4">
+                      <p className="mt-1.5 text-xs text-stone-600 leading-relaxed line-clamp-4">
                         {chunk.text}
                       </p>
-                      <div className="mt-3 flex flex-wrap gap-1 border-t border-slate-900 pt-2">
+                      <div className="mt-3 flex flex-wrap gap-1 border-t border-stone-200 pt-2">
                         {chunk.keywords.map((kw, idx) => (
                           <span
                             key={idx}
-                            className="rounded bg-slate-900 px-1.5 py-0.5 text-[10px] font-mono text-slate-400"
+                            className="rounded bg-white px-1.5 py-0.5 text-[10px] font-mono text-stone-600 border border-stone-200"
                           >
                             #{kw}
                           </span>
@@ -487,99 +485,98 @@ export default function KnowledgePage() {
           )}
         </section>
 
-        {/* SECTION 3: AVAILABLE MEDIA ASSETS */}
+        {/* SECTION 3: AVAILABLE MEDIA ASSETS CATALOG */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Layers className="h-5 w-5 text-amber-400" />
-              <h3 className="text-lg font-bold text-white">
-                Available Media Assets Catalog
-              </h3>
-            </div>
-            <span className="text-xs text-slate-400">PDFs & Videos Delivered on Customer Request</span>
+          <div>
+            <h3 className="text-base font-semibold text-stone-900">
+              3. Available Media Catalog (PDFs & Videos)
+            </h3>
+            <p className="text-xs text-stone-500">
+              Media assets delivered dynamically by the chatbot when requested.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {availableMedia.map((asset) => (
               <div
                 key={asset.id}
-                className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-xl flex flex-col justify-between"
+                className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-800 px-2.5 py-1 text-xs font-semibold text-cyan-300">
+                    <span className="inline-flex items-center gap-1.5 rounded-lg bg-stone-100 px-2.5 py-1 text-xs font-semibold text-stone-800">
                       {asset.type === 'pdf' ? (
                         <>
-                          <FileText className="h-3.5 w-3.5 text-rose-400" />
-                          <span>PDF Document</span>
+                          <FileText className="h-3.5 w-3.5 text-red-600" />
+                          <span>PDF Brochure</span>
                         </>
                       ) : (
                         <>
-                          <Film className="h-3.5 w-3.5 text-cyan-400" />
+                          <Film className="h-3.5 w-3.5 text-stone-700" />
                           <span>Video Asset</span>
                         </>
                       )}
                     </span>
                     {asset.isDemo && (
-                      <span className="rounded bg-amber-500/20 px-2 py-0.5 text-[10px] font-semibold text-amber-300 ring-1 ring-amber-500/30">
+                      <span className="rounded bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-800 border border-amber-200">
                         {asset.demoLabel}
                       </span>
                     )}
                   </div>
 
-                  <h4 className="mt-3 text-base font-bold text-slate-100">
+                  <h4 className="mt-3 text-base font-bold text-stone-900">
                     {asset.title}
                   </h4>
-                  <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+                  <p className="mt-1 text-xs text-stone-600 leading-relaxed">
                     {asset.description}
                   </p>
 
-                  <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-3 space-y-1.5 text-xs text-slate-400 font-mono">
+                  <div className="mt-4 rounded-lg border border-stone-200 bg-stone-50 p-3 space-y-1.5 text-xs text-stone-600 font-mono">
                     <div className="flex justify-between">
-                      <span>Filename:</span>
-                      <span className="text-slate-300">{asset.filename}</span>
+                      <span className="text-stone-500">Filename:</span>
+                      <span className="text-stone-800 font-semibold">{asset.filename}</span>
                     </div>
                     {asset.size && (
                       <div className="flex justify-between">
-                        <span>File Size:</span>
-                        <span className="text-slate-300">{asset.size}</span>
+                        <span className="text-stone-500">File Size:</span>
+                        <span className="text-stone-800">{asset.size}</span>
                       </div>
                     )}
                     {asset.duration && (
                       <div className="flex justify-between">
-                        <span>Duration:</span>
-                        <span className="text-slate-300">{asset.duration}</span>
+                        <span className="text-stone-500">Duration:</span>
+                        <span className="text-stone-800">{asset.duration}</span>
                       </div>
                     )}
                     {asset.resolution && (
                       <div className="flex justify-between">
-                        <span>Resolution:</span>
-                        <span className="text-slate-300">{asset.resolution}</span>
+                        <span className="text-stone-500">Resolution:</span>
+                        <span className="text-stone-800">{asset.resolution}</span>
                       </div>
                     )}
                     <div className="flex justify-between">
-                      <span>Public Path:</span>
-                      <span className="text-cyan-400 truncate max-w-[200px]">{asset.url}</span>
+                      <span className="text-stone-500">Path:</span>
+                      <span className="text-stone-800 truncate max-w-[220px]">{asset.url}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-5 flex items-center gap-2 pt-4 border-t border-slate-800">
+                <div className="mt-5 flex items-center gap-2 pt-4 border-t border-stone-100">
                   <a
                     href={asset.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-cyan-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow hover:bg-cyan-500"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-stone-900 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-stone-800 transition"
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
-                    <span>Open Asset Directly</span>
+                    <span>Open Asset</span>
                   </a>
                   {asset.externalUrl && (
                     <a
                       href={asset.externalUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800 px-3.5 py-1.5 text-xs font-medium text-slate-300 hover:text-white"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3.5 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-50 transition"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
                       <span>External Link</span>

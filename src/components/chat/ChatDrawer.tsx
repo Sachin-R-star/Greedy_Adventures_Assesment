@@ -5,19 +5,17 @@ import { AssistantRuntimeProvider, useLocalRuntime } from '@assistant-ui/core/re
 import { MediaAsset } from '@/lib/knowledge/data';
 import { MediaCards } from './MediaCards';
 import { ChatMessageContent } from './ChatMessageContent';
+import { ParachuteSvg } from '@/components/common/SvgIcons';
 import {
-  MessageSquare,
   X,
   Send,
-  Sparkles,
-  Bot,
-  User,
   RotateCcw,
   AlertCircle,
   Loader2,
   HelpCircle,
   ExternalLink,
-  ShieldCheck
+  ShieldCheck,
+  User
 } from 'lucide-react';
 
 export interface MessageItem {
@@ -58,8 +56,8 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
     {
       id: 'welcome-msg',
       role: 'assistant',
-      content: `### Welcome to Greedy Adventures! 🪂🌊\n\nI am your AI Concierge for the **Sea View Skydiving** experience in Pattaya, Thailand.\n\nAsk me anything about our **13,000-ft tandem jumps**, request our **official brochure (PDF)**, watch our **video footage**, or check pricing and safety requirements!\n\nWhat would you like to explore today?`,
-      engine: 'Greedy Adventures Concierge',
+      content: `### Welcome to Greedy Adventures 🪂\n\nI am your concierge for the **Sea View Skydiving** experience in Pattaya, Thailand.\n\nYou can ask about our **13,000-ft tandem jumps**, request our **official brochure (PDF)**, watch **video footage**, or check pricing and safety criteria.\n\nHow can I help you today?`,
+      engine: 'Dropzone Knowledge Engine',
       isMock: true,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
@@ -71,7 +69,6 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-scroll to bottom of messages
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -83,14 +80,12 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
     }
   }, [isOpen, messages]);
 
-  // Handle preloaded initial query from page actions
   useEffect(() => {
     if (initialQuery && isOpen) {
       sendMessage(initialQuery);
     }
   }, [initialQuery, isOpen]);
 
-  // Keyboard shortcut: Escape to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -101,7 +96,6 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Core send message handler (with full multi-turn conversation memory)
   const sendMessage = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
     if (!text || isLoading) return;
@@ -115,14 +109,12 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    // Append user message immediately
     const updatedMessages = [...messages, newUserMsg];
     setMessages(updatedMessages);
     setInput('');
     setIsLoading(true);
 
     try {
-      // Send conversation history to backend /api/chat to maintain context
       const payload = {
         messages: updatedMessages.map(m => ({
           role: m.role,
@@ -157,7 +149,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
       setMessages(prev => [...prev, assistantMsg]);
     } catch (err: any) {
       console.error('Chat error:', err);
-      setErrorMessage(err?.message || 'Failed to connect to the assistant server. Please try again.');
+      setErrorMessage(err?.message || 'Failed to connect to the assistant service.');
     } finally {
       setIsLoading(false);
     }
@@ -175,8 +167,8 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
       {
         id: 'welcome-msg-reset',
         role: 'assistant',
-        content: `Conversation refreshed! How can I help you plan your Sea View Skydiving experience today?\n\nTry asking for package pricing, our brochure, or an experience video!`,
-        engine: 'Greedy Adventures Concierge',
+        content: `Conversation restarted. How can I help you plan your Sea View Skydiving jump today?`,
+        engine: 'Dropzone Knowledge Engine',
         isMock: true,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
@@ -184,7 +176,7 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
     setErrorMessage(null);
   };
 
-  // assistant-ui ChatModelAdapter definition
+  // assistant-ui ChatModelAdapter
   const adapter = {
     async *run({ messages: auiMessages, abortSignal }: { messages: any[]; abortSignal?: AbortSignal }) {
       const lastUserMsg = auiMessages[auiMessages.length - 1];
@@ -214,36 +206,35 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
   return (
     <AssistantRuntimeProvider runtime={localRuntime}>
       <div
-        className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 z-50 flex justify-end bg-stone-900/40 backdrop-blur-xs transition-opacity duration-200"
         role="dialog"
         aria-modal="true"
-        aria-label="Greedy Adventures Skydiving AI Assistant"
+        aria-label="Greedy Adventures Assistant"
       >
-        {/* Backdrop dismiss */}
+        {/* Backdrop click to dismiss */}
         <div className="flex-1" onClick={onClose} />
 
-        {/* Drawer Panel */}
-        <div className="flex h-full w-full max-w-lg flex-col border-l border-slate-800 bg-slate-950 shadow-2xl transition-transform duration-300">
+        {/* Clean Drawer Panel */}
+        <div className="flex h-full w-full max-w-lg flex-col border-l border-stone-200 bg-white shadow-2xl transition-transform duration-200">
           
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-4 py-3 backdrop-blur">
+          <div className="flex items-center justify-between border-b border-stone-200 bg-white px-5 py-3.5">
             <div className="flex items-center gap-3">
-              <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-600 to-sky-400 text-white shadow-lg shadow-cyan-900/30 ring-1 ring-cyan-400/40">
-                <Bot className="h-5 w-5" />
-                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-950" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-stone-900 text-white">
+                <ParachuteSvg className="h-5 w-5" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold text-white tracking-wide">
-                    Sea View Skydiving Assistant
+                  <h3 className="text-sm font-semibold text-stone-900">
+                    Skydiving Concierge
                   </h3>
-                  <span className="rounded bg-cyan-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-cyan-300 ring-1 ring-cyan-500/20">
-                    Live
+                  <span className="rounded bg-emerald-50 px-1.5 py-0.2 text-[10px] font-medium text-emerald-800 border border-emerald-200">
+                    Online
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 flex items-center gap-1">
-                  <ShieldCheck className="h-3 w-3 text-cyan-400" />
-                  Grounded on Official Website Knowledge
+                <p className="text-[11px] text-stone-500 flex items-center gap-1">
+                  <ShieldCheck className="h-3 w-3 text-stone-700" />
+                  Grounded on official website facts
                 </p>
               </div>
             </div>
@@ -252,76 +243,67 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
               <button
                 type="button"
                 onClick={resetChat}
-                title="Reset conversation"
-                className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                aria-label="Restart conversation"
+                title="Restart conversation"
+                className="rounded-lg p-2 text-stone-500 transition hover:bg-stone-100 hover:text-stone-800"
+                aria-label="Restart chat"
               >
                 <RotateCcw className="h-4 w-4" />
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                title="Close assistant (Esc)"
-                className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                aria-label="Close assistant"
+                title="Close chat"
+                className="rounded-lg p-2 text-stone-500 transition hover:bg-stone-100 hover:text-stone-800"
+                aria-label="Close chat"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
           </div>
 
-          {/* Engine Banner */}
-          <div className="flex items-center justify-between border-b border-slate-900 bg-slate-900/40 px-4 py-1.5 text-[11px] text-slate-400">
-            <span className="flex items-center gap-1.5">
-              <Sparkles className="h-3 w-3 text-amber-400" />
-              <span>Multi-turn Memory Enabled</span>
-            </span>
-            <span className="rounded bg-slate-800 px-2 py-0.5 text-[10px] font-mono text-cyan-300">
-              assistant-ui v0.15
-            </span>
-          </div>
-
-          {/* Messages Container */}
+          {/* Messages list */}
           <div
-            className="flex-1 space-y-4 overflow-y-auto p-4 scrollbar-thin scrollbar-track-slate-950 scrollbar-thumb-slate-800"
+            className="flex-1 space-y-4 overflow-y-auto p-4 bg-[#fafaf9]"
             role="log"
             aria-live="polite"
           >
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex gap-2.5 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.role === 'assistant' && (
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-cyan-400 ring-1 ring-slate-700">
-                    <Bot className="h-4 w-4" />
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-stone-200 text-stone-800 mt-0.5">
+                    <ParachuteSvg className="h-3.5 w-3.5" />
                   </div>
                 )}
 
                 <div
-                  className={`relative max-w-[88%] rounded-2xl p-4 shadow-md ${
+                  className={`relative max-w-[86%] rounded-xl p-4 ${
                     msg.role === 'user'
-                      ? 'bg-gradient-to-r from-cyan-600 to-sky-600 text-white rounded-br-xs'
-                      : 'border border-slate-800/80 bg-slate-900/80 text-slate-200 rounded-bl-xs'
+                      ? 'bg-stone-900 text-white'
+                      : 'border border-stone-200 bg-white text-stone-800 shadow-xs'
                   }`}
                 >
-                  {/* Message Content */}
+                  {/* Content */}
                   {msg.role === 'user' ? (
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                   ) : (
                     <ChatMessageContent content={msg.content} />
                   )}
 
-                  {/* Rich Media Deliverables (PDF & Video) */}
+                  {/* Media Deliverables (PDF & Video) */}
                   {msg.media && msg.media.length > 0 && (
                     <MediaCards media={msg.media} />
                   )}
 
                   {/* Timestamp & Engine footer */}
-                  <div className="mt-2 flex items-center justify-between gap-2 text-[10px] text-slate-400/80">
+                  <div className={`mt-2 flex items-center justify-between gap-2 text-[10px] ${
+                    msg.role === 'user' ? 'text-stone-300' : 'text-stone-400'
+                  }`}>
                     <span>{msg.timestamp}</span>
                     {msg.engine && (
-                      <span className="font-mono text-[9px] text-slate-400">
+                      <span className="font-mono text-[9px]">
                         {msg.engine} {msg.isMock ? '(Demo)' : ''}
                       </span>
                     )}
@@ -329,8 +311,8 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
                 </div>
 
                 {msg.role === 'user' && (
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-700 text-white">
-                    <User className="h-4 w-4" />
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-stone-900 text-white mt-0.5">
+                    <User className="h-3.5 w-3.5" />
                   </div>
                 )}
               </div>
@@ -338,29 +320,29 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
 
             {/* Loading Indicator */}
             {isLoading && (
-              <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-cyan-400 ring-1 ring-slate-700 animate-pulse">
-                  <Bot className="h-4 w-4" />
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-stone-200 text-stone-800">
+                  <ParachuteSvg className="h-3.5 w-3.5" />
                 </div>
-                <div className="flex items-center gap-2 rounded-2xl border border-slate-800 bg-slate-900/80 px-4 py-3 text-xs text-slate-400 shadow-md">
-                  <Loader2 className="h-4 w-4 animate-spin text-cyan-400" />
-                  <span>Searching dropzone knowledge & preparing response...</span>
+                <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white px-3.5 py-2.5 text-xs text-stone-600 shadow-xs">
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-stone-700" />
+                  <span>Searching knowledge & composing answer...</span>
                 </div>
               </div>
             )}
 
             {/* Error Message */}
             {errorMessage && (
-              <div className="flex items-start gap-2.5 rounded-xl border border-rose-500/30 bg-rose-950/30 p-3 text-xs text-rose-300">
-                <AlertCircle className="h-4 w-4 shrink-0 text-rose-400 mt-0.5" />
+              <div className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+                <AlertCircle className="h-4 w-4 shrink-0 text-red-600 mt-0.5" />
                 <div className="flex-1">
-                  <p className="font-semibold">Assistant Connection Notice</p>
-                  <p className="mt-0.5 text-rose-200/80">{errorMessage}</p>
+                  <p className="font-semibold">Unable to process inquiry</p>
+                  <p className="mt-0.5">{errorMessage}</p>
                   <button
                     onClick={() => sendMessage()}
-                    className="mt-2 rounded bg-rose-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-rose-500"
+                    className="mt-2 rounded bg-red-700 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-red-800"
                   >
-                    Retry Request
+                    Retry
                   </button>
                 </div>
               </div>
@@ -369,20 +351,20 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Preset Prompts Pills */}
-          <div className="border-t border-slate-900 bg-slate-950 px-4 py-2">
-            <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-400 mb-1.5">
-              <HelpCircle className="h-3 w-3 text-cyan-400" />
+          {/* Quick Prompts */}
+          <div className="border-t border-stone-200 bg-white px-4 py-2">
+            <div className="flex items-center gap-1.5 text-[11px] font-medium text-stone-500 mb-1.5">
+              <HelpCircle className="h-3 w-3" />
               <span>Suggested questions:</span>
             </div>
-            <div className="flex flex-wrap gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            <div className="flex flex-wrap gap-1.5">
               {PRESET_PROMPTS.map((prompt, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => sendMessage(prompt)}
                   disabled={isLoading}
-                  className="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs text-slate-300 transition hover:border-cyan-500/50 hover:bg-slate-800 hover:text-cyan-200 focus:outline-none focus:ring-1 focus:ring-cyan-500 disabled:opacity-50"
+                  className="rounded-full border border-stone-300 bg-white px-3 py-1 text-xs text-stone-700 transition hover:bg-stone-100 hover:border-stone-400 disabled:opacity-50"
                 >
                   {prompt}
                 </button>
@@ -390,8 +372,8 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
             </div>
           </div>
 
-          {/* Input Composer Form */}
-          <div className="border-t border-slate-800/80 bg-slate-900/60 p-3 backdrop-blur">
+          {/* Input composer */}
+          <div className="border-t border-stone-200 bg-white p-3">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -407,24 +389,24 @@ export const ChatDrawer: React.FC<ChatDrawerProps> = ({
                 placeholder="Ask about packages, brochure, video, safety..."
                 rows={1}
                 disabled={isLoading}
-                className="w-full resize-none rounded-xl border border-slate-700 bg-slate-900 py-3 pl-4 pr-12 text-sm text-slate-100 placeholder-slate-500 shadow-inner focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 disabled:opacity-50"
+                className="w-full resize-none rounded-xl border border-stone-300 bg-white py-2.5 pl-3.5 pr-11 text-sm text-stone-900 placeholder-stone-400 focus:border-stone-900 focus:outline-none focus:ring-1 focus:ring-stone-900 disabled:opacity-50"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
                 aria-label="Send message"
-                className="absolute right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-600 text-white shadow-md transition hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:bg-slate-800 disabled:text-slate-600"
+                className="absolute right-2 flex h-8 w-8 items-center justify-center rounded-lg bg-stone-900 text-white transition hover:bg-stone-800 disabled:bg-stone-200 disabled:text-stone-400"
               >
                 <Send className="h-4 w-4" />
               </button>
             </form>
-            <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500">
-              <span>Press <kbd className="rounded bg-slate-800 px-1 py-0.5 font-mono text-slate-400">Enter</kbd> to send</span>
+            <div className="mt-2 flex items-center justify-between text-[10px] text-stone-500">
+              <span>Press <kbd className="rounded bg-stone-100 px-1 py-0.5 font-mono text-stone-600 border border-stone-200">Enter</kbd> to send</span>
               <a
                 href="/knowledge"
-                className="flex items-center gap-1 text-cyan-400 hover:underline"
+                className="flex items-center gap-1 text-stone-700 hover:text-stone-900 hover:underline"
               >
-                <span>Inspect Knowledge Base</span>
+                <span>Read-only Knowledge View</span>
                 <ExternalLink className="h-2.5 w-2.5" />
               </a>
             </div>
