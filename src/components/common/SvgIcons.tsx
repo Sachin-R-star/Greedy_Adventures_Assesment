@@ -49,6 +49,76 @@ export const DropzoneEmblemSvg: React.FC<SvgProps> = ({ className = 'h-6 w-6', s
   </svg>
 );
 
+// Scenic Coastal Dropzone Banner Illustration SVG (For Chatbot Header & Welcome)
+export const DropzoneSkylineSvg: React.FC<SvgProps> = ({ className = 'w-full h-24', ...props }) => (
+  <svg
+    viewBox="0 0 360 90"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    {...props}
+  >
+    <defs>
+      <linearGradient id="sky-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#fff7ed" />
+        <stop offset="50%" stopColor="#ffedd5" />
+        <stop offset="100%" stopColor="#fed7aa" />
+      </linearGradient>
+      <linearGradient id="ocean-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#0284c7" />
+        <stop offset="100%" stopColor="#0ea5e9" />
+      </linearGradient>
+    </defs>
+
+    {/* Sky Backdrop */}
+    <rect width="360" height="90" rx="12" fill="url(#sky-gradient)" />
+    
+    {/* Distant Sun */}
+    <circle cx="290" cy="30" r="14" fill="#fb923c" fillOpacity="0.4" />
+    <circle cx="290" cy="30" r="8" fill="#f97316" fillOpacity="0.7" />
+
+    {/* Distant Clouds */}
+    <path d="M30 35c2-4 6-5 10-3 3-5 10-4 13 0 4-1 8 2 8 6H30c-2 0-3-1-3-3z" fill="#ffffff" fillOpacity="0.75" />
+    <path d="M190 25c2-3 5-4 8-2 2-4 8-3 10 0 3-1 6 1 6 5h-24c-1 0-2-1-2-3z" fill="#ffffff" fillOpacity="0.6" />
+
+    {/* Cruising Jump Airplane at 13,000 ft */}
+    <g transform="translate(60, 18) scale(0.65)">
+      <path d="M2 15h12l5-11h4l-3 11h9l3-4h2.5l-1.5 7.5-2 .5H2z" fill="#1c1917" />
+      <circle cx="34" cy="18" r="1.5" fill="#f97316" />
+    </g>
+
+    {/* Parachute in Freefall / Glide */}
+    <g transform="translate(145, 14)">
+      {/* Canopy */}
+      <path d="M0 16C0 7.16 7.16 0 16 0s16 7.16 16 16c-4.5-1-9-1.5-16-1.5S4.5 15 0 16z" fill="#ea580c" />
+      <path d="M11 0c-3 4-4.5 9-4.5 15" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.8" />
+      <path d="M21 0c3 4 4.5 9 4.5 15" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.8" />
+      <path d="M16 0v14.5" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.8" />
+      
+      {/* Cords */}
+      <path d="M2 16L16 32M30 16L16 32M10 15L16 32M22 15L16 32" stroke="#44403c" strokeWidth="0.85" />
+      
+      {/* Tandem pair */}
+      <circle cx="16" cy="32" r="2.2" fill="#1c1917" />
+      <path d="M14 34h4v3h-4z" fill="#0284c7" />
+    </g>
+
+    {/* Pattaya Coastline Ocean Waves */}
+    <path
+      d="M0 72c20-2 40 2 60 0s40-4 60-2 40 4 60 1 40-4 60-2 40 4 60 1v19H0V72z"
+      fill="url(#ocean-gradient)"
+      fillOpacity="0.85"
+    />
+    <path
+      d="M0 78c25-1 50 2 75 0s50-3 75-1 50 3 75 0 50-3 75 0 35 2 60 0v12H0V78z"
+      fill="#0369a1"
+    />
+    <text x="12" y="84" fill="#ffffff" fillOpacity="0.9" fontSize="8" fontFamily="monospace" fontWeight="bold">
+      GULF OF THAILAND • PATTAYA DROPZONE
+    </text>
+  </svg>
+);
+
 // Parachute Canopy SVG
 export const ParachuteSvg: React.FC<SvgProps> = ({ className = 'h-6 w-6', size = 24, ...props }) => (
   <svg
