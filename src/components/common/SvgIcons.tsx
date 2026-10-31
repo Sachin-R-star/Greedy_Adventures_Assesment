@@ -9,6 +9,46 @@ interface SvgProps extends React.SVGProps<SVGSVGElement> {
  * Clean, hand-crafted vector SVG icons for Sea View Skydiving
  */
 
+// Dropzone Luxury Emblem SVG (Modern Geometric Mark)
+export const DropzoneEmblemSvg: React.FC<SvgProps> = ({ className = 'h-6 w-6', size = 24, ...props }) => (
+  <svg
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    className={className}
+    {...props}
+  >
+    {/* Outer precision compass ring */}
+    <circle cx="16" cy="16" r="14.5" stroke="currentColor" strokeWidth="1.25" strokeOpacity="0.4" strokeDasharray="1.5 2.5" />
+    <circle cx="16" cy="16" r="12" stroke="currentColor" strokeWidth="1" strokeOpacity="0.25" />
+    
+    {/* Parachute canopy arc */}
+    <path
+      d="M8 14.5C8 10.0817 11.5817 6.5 16 6.5C20.4183 6.5 24 10.0817 24 14.5C21.3333 14 18.6667 13.5 16 13.5C13.3333 13.5 10.6667 14 8 14.5Z"
+      fill="currentColor"
+      fillOpacity="0.12"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    {/* Internal canopy ribs */}
+    <path d="M16 6.5V13.5" stroke="currentColor" strokeWidth="1.25" />
+    <path d="M12 8.5C13 10.5 13.5 12 13.5 13.5" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" />
+    <path d="M20 8.5C19 10.5 18.5 12 18.5 13.5" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" />
+    
+    {/* Suspension lines */}
+    <path d="M9 14.5L16 23.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+    <path d="M23 14.5L16 23.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+    <path d="M13.5 13.5L16 23.5" stroke="currentColor" strokeWidth="1" strokeOpacity="0.7" />
+    <path d="M18.5 13.5L16 23.5" stroke="currentColor" strokeWidth="1" strokeOpacity="0.7" />
+    
+    {/* Jumper payload center */}
+    <circle cx="16" cy="23.5" r="1.5" fill="currentColor" />
+  </svg>
+);
+
 // Parachute Canopy SVG
 export const ParachuteSvg: React.FC<SvgProps> = ({ className = 'h-6 w-6', size = 24, ...props }) => (
   <svg
@@ -152,4 +192,3 @@ export const SpeedometerSvg: React.FC<SvgProps> = ({ className = 'h-6 w-6', size
     <circle cx="12" cy="14" r="1.5" fill="currentColor" />
   </svg>
 );
-
