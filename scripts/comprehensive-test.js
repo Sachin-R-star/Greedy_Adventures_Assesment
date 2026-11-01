@@ -267,6 +267,68 @@ async function runComprehensiveTests() {
     assert(typeof res.data.execution.latencyMs === 'number', 'Reports backend execution latency');
   }
 
+  // TEST 18: Multilingual & Conversational Phrasing ("dono bhej do", "dono dikhao")
+  console.log('\n--- TEST GROUP 18: Multilingual & Conversational Phrasing ---');
+  {
+    const res1 = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'dono bhej do' }]
+    });
+    assert(res1.status === 200, 'HTTP 200 on "dono bhej do"');
+    assert(res1.data.media && res1.data.media.length === 2, 'Dual delivery attached on "dono bhej do"');
+
+    const res2 = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'kitna kharcha hoga' }]
+    });
+    assert(res2.status === 200, 'HTTP 200 on "kitna kharcha hoga"');
+    assert(res2.data.answer.includes('10,500') || res2.data.answer.includes('12,500'), 'Returns pricing breakdown on Hindi/Hinglish cost query');
+  }
+
+  // TEST 19: Solo Jump / AFF Training / License Query
+  console.log('\n--- TEST GROUP 19: Solo Skydiving & AFF Licensing Policy ---');
+  {
+    const res = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'Can I do solo jumping or an AFF course?' }]
+    });
+    assert(res.status === 200, 'HTTP 200 on solo skydiving inquiry');
+    assert(res.data.media.length === 0, 'Text-only response for solo jump query');
+    assert(res.data.answer.includes('Tandem') || res.data.answer.includes('tandem'), 'Accurately explains tandem-exclusive dropzone policy');
+  }
+
+  // TEST 20: Out-of-Scope with Media Keyword (No False Attachments)
+  console.log('\n--- TEST GROUP 20: Out-of-Scope with Media Keyword (Strict Suppression) ---');
+  {
+    const res = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'Can you send me a brochure for skydiving in Dubai or Mount Everest?' }]
+    });
+    assert(res.status === 200, 'HTTP 200 on out-of-scope media inquiry');
+    assert(res.data.media.length === 0, 'Zero media attached when query is out-of-scope, even if word "brochure" is present');
+    assert(res.data.retrieval.isUnavailableTopic === true, 'Correctly flagged as unavailable topic');
+  }
+
+  // TEST 21: Robust API Error Handling & Edge Cases
+  console.log('\n--- TEST GROUP 21: API Robustness & Validation ---');
+  {
+    const emptyRes = await post('/api/chat', { messages: [] });
+    assert(emptyRes.status === 400, 'HTTP 400 returned on empty messages array');
+
+    const invalidRes = await post('/api/chat', {});
+    assert(invalidRes.status === 400, 'HTTP 400 returned when messages field is omitted');
+  }
+
+  // TEST 22: Natural Phrasing Variations for Brochure & Video
+  console.log('\n--- TEST GROUP 22: Advanced Natural Phrasing Variations ---');
+  {
+    const pdfRes = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'Can I download the PDF document?' }]
+    });
+    assert(pdfRes.data.media.length === 1 && pdfRes.data.media[0].type === 'pdf', 'PDF delivered for "download the PDF document"');
+
+    const clipRes = await post('/api/chat', {
+      messages: [{ role: 'user', content: 'Show me a preview clip of the jump' }]
+    });
+    assert(clipRes.data.media.length === 1 && clipRes.data.media[0].type === 'video', 'Video delivered for "preview clip of the jump"');
+  }
+
   console.log('\n===============================================================');
   console.log(`TOTAL TESTS: ${passedCount + failedCount} | PASSED: ${passedCount} | FAILED: ${failedCount}`);
   console.log('===============================================================');
