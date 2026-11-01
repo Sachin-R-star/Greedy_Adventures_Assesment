@@ -43,7 +43,12 @@ export function detectMediaIntent(query: string): MediaIntent {
     'video and a brochure',
     'pdf and video',
     'video and pdf',
-    'both please'
+    'both please',
+    'dono',
+    'dono bhej do',
+    'dono chahiye',
+    'dono share karo',
+    'dono dikhao'
   ];
 
   if (bothPhrases.some(phrase => q.includes(phrase))) {
@@ -51,7 +56,7 @@ export function detectMediaIntent(query: string): MediaIntent {
   }
 
   // Standalone 'both'
-  if (q === 'both' || q === 'both please' || q === 'both thanks') {
+  if (q === 'both' || q === 'both please' || q === 'both thanks' || q === 'dono' || q === 'dono please') {
     return 'both';
   }
 
@@ -137,8 +142,9 @@ export function checkUnavailableTopic(query: string): boolean {
  */
 export function retrieveKnowledge(query: string): RetrievalResult {
   const tokens = tokenize(query);
-  const mediaIntent = detectMediaIntent(query);
   const isUnavailable = checkUnavailableTopic(query);
+  // If the topic is out-of-scope/unavailable, suppress media intent so irrelevant queries do not get dropzone assets
+  const mediaIntent = isUnavailable ? 'none' : detectMediaIntent(query);
 
   const scoredChunks = WEBSITE_SOURCE.chunks.map(chunk => {
     let score = 0;
@@ -168,17 +174,19 @@ export function retrieveKnowledge(query: string): RetrievalResult {
     matchedChunks = [WEBSITE_SOURCE.chunks[0], WEBSITE_SOURCE.chunks[1]];
   }
 
-  // Select media assets according to detected intent
+  // Select media assets according to detected intent (strictly when within dropzone scope)
   const selectedMedia: MediaAsset[] = [];
   const brochureAsset = AVAILABLE_MEDIA.find(m => m.type === 'pdf')!;
   const videoAsset = AVAILABLE_MEDIA.find(m => m.type === 'video')!;
 
-  if (mediaIntent === 'both') {
-    selectedMedia.push(brochureAsset, videoAsset);
-  } else if (mediaIntent === 'brochure') {
-    selectedMedia.push(brochureAsset);
-  } else if (mediaIntent === 'video') {
-    selectedMedia.push(videoAsset);
+  if (!isUnavailable) {
+    if (mediaIntent === 'both') {
+      selectedMedia.push(brochureAsset, videoAsset);
+    } else if (mediaIntent === 'brochure') {
+      selectedMedia.push(brochureAsset);
+    } else if (mediaIntent === 'video') {
+      selectedMedia.push(videoAsset);
+    }
   }
 
   const combinedContext = matchedChunks

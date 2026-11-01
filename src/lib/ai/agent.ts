@@ -97,7 +97,7 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
   }
 
   // Case 4: Package inclusions & pricing question
-  if (q.includes('package') || q.includes('include') || q.includes('tier') || q.includes('price') || q.includes('cost') || q.includes('pricing') || q.includes('rate') || q.includes('how much')) {
+  if (q.includes('package') || q.includes('include') || q.includes('tier') || q.includes('price') || q.includes('cost') || q.includes('pricing') || q.includes('rate') || q.includes('how much') || q.includes('fee') || q.includes('charge') || q.includes('kharcha')) {
     text += `### Greedy Adventures — Sea View Skydiving Packages 🪂\n\n`;
     text += `We offer **3 tiered tandem skydiving packages** tailored to your preferred media experience:\n\n`;
     text += `#### 1. Eco Tandem Skydive (Jump Only) — **9,500 to 10,500 THB**\n`;
@@ -197,6 +197,17 @@ function generateDeterministicAnswer(messages: ChatMessage[], retrieval: Retriev
     text += `• **Footwear**: Lace-up athletic sneakers/running shoes are required. Sandals, flip-flops, high heels, and boots are strictly prohibited.\n`;
     text += `• **Jewelry**: Leave loose necklaces, rings, and dangling earrings in our secure lockers.\n`;
     text += `• We provide custom jumpsuits and over-glasses skydiving goggles on site.\n\n`;
+    text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
+    return text;
+  }
+
+  // Case 12: Solo Jump / AFF Training / License
+  if (q.includes('solo') || q.includes('aff') || q.includes('license') || q.includes('licence') || q.includes('alone') || q.includes('by myself')) {
+    text += `### Tandem-Only Dropzone Policy 🪂\n\n`;
+    text += `Our Pattaya dropzone operates **strictly as a Tandem Skydiving facility**:\n\n`;
+    text += `• **100% Tandem Jumps**: Every jump is a 13,000-ft tandem skydive where you are securely harnessed to a licensed USPA tandem master.\n`;
+    text += `• **Zero Experience Required**: You do not need any license or prior training; your instructor handles parachute deployment, flight navigation, and landing.\n`;
+    text += `• **Solo / AFF Training**: We do not offer solo jumping or Accelerated Freefall (AFF) student licensing courses.\n\n`;
     text += `[Source: ${retrieval.sourceTitle}](${retrieval.sourceUrl})`;
     return text;
   }
