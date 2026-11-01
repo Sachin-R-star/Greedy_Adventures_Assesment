@@ -36,8 +36,8 @@ export default function HomePage() {
       <main className="flex-1">
         <Hero onOpenChat={handleOpenChat} />
         <Packages onOpenChat={handleOpenChat} />
-        <ExperienceJourney />
-        <SafetySection />
+        <ExperienceJourney onOpenChat={handleOpenChat} />
+        <SafetySection onOpenChat={handleOpenChat} />
         <FaqSection onOpenChat={handleOpenChat} />
       </main>
 
