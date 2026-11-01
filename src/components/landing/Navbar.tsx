@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { DropzoneEmblemSvg } from '../common/SvgIcons';
-import { Database, Menu, X, ArrowRight, ShieldCheck, Compass } from 'lucide-react';
+import { Database, Menu, X, ArrowRight, ShieldCheck, Compass, ExternalLink } from 'lucide-react';
 
 interface NavbarProps {
   onOpenChat: (query?: string) => void;
@@ -189,6 +189,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenChat }) => {
               <Database className="h-4 w-4 text-stone-600" />
               <span>Read-Only Knowledge View</span>
             </Link>
+            <a
+              href="https://greedyadventuresassesment.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-sm font-semibold text-amber-900"
+            >
+              <span>Live Vercel Deployment</span>
+              <ExternalLink className="h-3.5 w-3.5 text-amber-700" />
+            </a>
           </div>
         )}
 

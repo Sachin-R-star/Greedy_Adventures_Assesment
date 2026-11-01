@@ -165,13 +165,35 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChat }) => {
             </h4>
             <ul className="space-y-2 text-stone-400">
               <li>
+                <a
+                  href="https://greedyadventuresassesment.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-amber-400 hover:text-amber-300 font-semibold transition"
+                >
+                  <ExternalLink className="h-3.5 w-3.5 text-amber-400" />
+                  <span>Live Vercel Deployment</span>
+                </a>
+              </li>
+              <li>
                 <Link
                   href="/knowledge"
-                  className="inline-flex items-center gap-1.5 text-amber-400 hover:text-amber-300 font-semibold"
+                  className="inline-flex items-center gap-1.5 text-stone-300 hover:text-amber-300 transition"
                 >
-                  <BookOpen className="h-3.5 w-3.5" />
+                  <BookOpen className="h-3.5 w-3.5 text-amber-400" />
                   <span>Knowledge View Inspector</span>
                 </Link>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/Sachin-R-star/Greedy_Adventures_Assesment"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-stone-200 transition inline-flex items-center gap-1.5"
+                >
+                  <ExternalLink className="h-3 w-3" />
+                  <span>GitHub Repository</span>
+                </a>
               </li>
               <li>
                 <a

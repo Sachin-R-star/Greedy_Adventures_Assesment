@@ -8,9 +8,10 @@ A Next.js + TypeScript application redesigning the **Sea View Skydiving** experi
 
 ## 🚀 Live Demo & Repository
 
-* **Vercel Demo Link:** [https://greedy-seaview-skydiving.vercel.app](https://greedy-seaview-skydiving.vercel.app) *(Deploy-ready)*
-* **Local Preview:** `http://localhost:3000`
-* **Knowledge View:** `http://localhost:3000/knowledge`
+* **Live Vercel Deployment:** [Sea View Skydiving Pattaya — Greedy Adventures](https://greedyadventuresassesment.vercel.app/)
+* **GitHub Repository:** [https://github.com/Sachin-R-star/Greedy_Adventures_Assesment.git](https://github.com/Sachin-R-star/Greedy_Adventures_Assesment.git)
+* **Live Knowledge View Inspector:** [https://greedyadventuresassesment.vercel.app/knowledge](https://greedyadventuresassesment.vercel.app/knowledge)
+* **Local Development Preview:** `http://localhost:3000`
 
 ---
 
@@ -102,8 +103,8 @@ A Next.js + TypeScript application redesigning the **Sea View Skydiving** experi
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone <repo-url>
-cd Greedy_Adventures_assesment_intern
+git clone https://github.com/Sachin-R-star/Greedy_Adventures_Assesment.git
+cd Greedy_Adventures_Assesment
 
 # Install dependencies
 npm install
@@ -155,7 +156,7 @@ node scripts/verify-all.js
 
 ## 🔍 How to Open the Knowledge View
 
-1. **Direct URL:** Navigate to [`/knowledge`](http://localhost:3000/knowledge).
+1. **Direct URL:** Navigate to [/knowledge](https://greedyadventuresassesment.vercel.app/knowledge) (or `http://localhost:3000/knowledge` locally).
 2. **From the Navbar:** Click the **"Knowledge View"** link in the navigation header.
 3. **From the Chat Drawer:** Click the **"Inspect Knowledge Base"** link at the bottom of the composer.
 4. **From the Top Banner:** Click the **"Open Knowledge View"** shortcut link in the header notification strip.
